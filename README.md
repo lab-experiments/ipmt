@@ -1,5 +1,4 @@
 # ipmt 
-(***Indexed Pattern Matching Tool***)
 
 Programa desenvolvido em C++, similar ao [Grep-GNU](https://www.gnu.org/software/grep/) para busca de padrões em texto usando indexação(casamento offline exato) e compressão;
 
@@ -65,7 +64,9 @@ $ ipmt search pattern [options] indexfile [indexfile...]
 
 -  ***pattern***: uma string com o padrão para busca no texto.
 
--  ***indexfile***: arquivo(s) com extensão .idx, podendo ser um ou vários. Os arquivos podem ser lidos via [wildcard](https://www.gnu.org/software/make/manual/html_node/Wildcard-Examples.html) ex: nome*.idx. (Obs.Arquivos serão lidos pela ordem de inserção.)
+-  ***indexfile***: arquivo(s) com extensão .idx, podendo ser um ou vários. Os arquivos podem ser lidos via [wildcard](https://www.gnu.org/software/make/manual/html_node/Wildcard-Examples.html) ex: nome*.idx. 
+
+:warning: - Arquivos serão lidos pela ordem de inserção.
 
 
 ```
@@ -94,4 +95,6 @@ $ipmt -h
 
 ##Algoritmos utilizado:
 
-[em construção]
+:construction:
+
+Desenvolvida por @thaisamirely :raising_hand:
