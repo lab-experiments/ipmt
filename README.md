@@ -53,7 +53,14 @@ ipmt/
 
 ####Modo Indexação
 
+```
+$ ipmt index [options] textfile [textfile...]
 
+```
+-  ***textfile***: arquivo(s) com extensão .txt, podendo ser um ou vários. Os arquivos podem ser lidos via [wildcard](https://www.gnu.org/software/make/manual/html_node/Wildcard-Examples.html) ex: nome*.txt. 
+
+- ***[option]***:
+  - ***--compression LZ78***: a compressão dos arquivos de indexes passarão a serem realizados atravéz do algoritmo. Mais informações na seção de referências.
 
 ####Busca Padrão
 
@@ -93,10 +100,15 @@ $ipmt -h
 
 
 
-##Algoritmos utilizado:
+##Algoritmos utilizados:
 
 :construction:
 
 [D. Gusfielld. Linear-Time Construction of Suffix Trees. Cambrige, University Press, New York, NY, USA, 1997.](http://web.stanford.edu/~mjkay/gusfield.pdf)
+
+[ZIV, Jacob, LEMPEL, Abraham; A Universal Algorithm for Sequential Data Compression, IEEE Transactions on Information Theory, 23(3), pp. 337–343, maio de 1977.](http://www.cs.duke.edu/courses/spring03/cps296.5/papers/ziv_lempel_1977_universal_algorithm.pdf)
+
+[ZIV, Jacob, LEMPEL, Abraham; Compression of Individual Sequences Via Variable-Rate Coding, IEEE Transactions on Information Theory, September 1978.](http://www.cs.duke.edu/courses/spring03/cps296.5/papers/ziv_lempel_1978_variable-rate.pdf)
+
 
 Desenvolvida por @thaisamirely :raising_hand:
