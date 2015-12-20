@@ -97,4 +97,6 @@ $ipmt -h
 
 :construction:
 
+[D. Gusfielld. Linear-Time Construction of Suffix Trees. Cambrige, University Press, New York, NY, USA, 1997.](http://web.stanford.edu/~mjkay/gusfield.pdf)
+
 Desenvolvida por @thaisamirely :raising_hand:
