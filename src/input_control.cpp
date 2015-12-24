@@ -12,7 +12,7 @@
 #include <getopt.h>
 #include <errno.h>
 #include <string.h>
-
+#include "error.h"
 #include "input_control.hpp"
 
 using namespace std;
@@ -71,7 +71,7 @@ CommandModel InputControl::SetCommand(int argc, const char* argv[]){
                     command_model.SetCompressioType(command_model.CompressionType::LZ78);
                     
                 }else{
-                    InputControl::ShowException("A opção --compression, requer um argumento do tipo 0 para LZ77 ou 1 para LZ78.\n Mais informações cheque $impt --help.");
+                    ShowException("A opção --compression, requer um argumento do tipo 0 para LZ77 ou 1 para LZ78.\n Mais informações cheque $impt --help.");
                     
                 }
                 break ;
@@ -84,22 +84,22 @@ CommandModel InputControl::SetCommand(int argc, const char* argv[]){
                     command_model.SetIndexType(command_model.IndexType::suffix_tree);
                     
                 }else{
-                    InputControl::ShowException("A opção --index, requer um argumento do tipo 0 para suffixtree ou 1 para arraysuffix.\n Mais informações cheque $impt --help.");
+                    ShowException("A opção --index, requer um argumento do tipo 0 para suffixtree ou 1 para arraysuffix.\n Mais informações cheque $impt --help.");
                 }
                 break ;
 
             case '?':
                 if (optopt == 'c'){
-                    InputControl::ShowException("A opção --compression, requer um argumento do tipo 0 para LZ77 ou 1 para LZ78.\n Mais informações cheque $impt --help.");
+                    ShowException("A opção --compression, requer um argumento do tipo 0 para LZ77 ou 1 para LZ78.\n Mais informações cheque $impt --help.");
                 
                 }else if (optopt == 't'){
-                    InputControl::ShowException("A opção --index, requer um argumento do tipo 0 para suffixtree ou 1 para arraysuffix.\n Mais informações cheque $impt --help.");
+                    ShowException("A opção --index, requer um argumento do tipo 0 para suffixtree ou 1 para arraysuffix.\n Mais informações cheque $impt --help.");
                 
                 }else if(optopt == 'p'){
-                    InputControl::ShowException("A opção -p ou --pattern, requer um argumento do tipo arquivo de texto.\n Mais informações cheque $impt --help.");
+                    ShowException("A opção -p ou --pattern, requer um argumento do tipo arquivo de texto.\n Mais informações cheque $impt --help.");
                     
                 }else{
-                    InputControl::ShowException("Comando inválido. Cheque $impt --help.");
+                    ShowException("Comando inválido. Cheque $impt --help.");
                 
                 }
                 break ;
@@ -132,7 +132,7 @@ void InputControl::GetExtraArguments(const char* argv[])
                 command_model.SetFileName(v_result_args[1]);
                 
             }else{
-                InputControl::ShowException("Arquivo para manipulação não informado.");
+                ShowException("Arquivo para manipulação não informado.");
                 
             }
             break;
@@ -142,7 +142,7 @@ void InputControl::GetExtraArguments(const char* argv[])
                 command_model.SetFileName(v_result_args[0]);
                 
             }else{
-                InputControl::ShowException("Arquivo para manipulação não informado.");
+                ShowException("Arquivo para manipulação não informado.");
                 
             }
             break;
@@ -172,8 +172,3 @@ void InputControl::ShowHelp()
 
 }
 
-void InputControl::ShowException(const char * message)
-{
-    fprintf(stdout, message);
-    exit(EXIT_FAILURE);
-}
