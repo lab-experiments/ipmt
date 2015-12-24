@@ -17,15 +17,16 @@
 class InputControl{
     
 private:
+    
     int index;
     CommandModel command_model;
     void GetExtraArguments(const char* argv[]);
     void ShowHelp();
-    void ShowException(const char * message);
     
 public:
-    CommandModel SetCommand(int argc, const char* args[]);
     
+    CommandModel SetCommand(int argc, const char* args[]);
+
     enum CommandType
     {
         INDEX, SEARCH
