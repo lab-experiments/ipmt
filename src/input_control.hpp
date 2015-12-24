@@ -6,12 +6,11 @@
 //  Copyright © 2015 tmbs. All rights reserved.
 //
 
-#ifndef __pmt_project__inputControl__
-#define __pmt_project__inputControl__
+#ifndef input_control_hpp
+#define input_control_hpp
 
 #include <stdio.h>
 #include "command_model.hpp"
-#include "search_file.hpp"
 
 #define VERSION_CODE "1.0"
 
@@ -29,8 +28,8 @@ public:
     
     enum CommandType
     {
-        Index,Search
+        INDEX, SEARCH
     };
 
 };
-#endif /* defined(__pmt_project__inputControl__) */
+#endif /* input_control_hpp */

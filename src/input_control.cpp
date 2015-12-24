@@ -145,6 +145,7 @@ void InputControl::GetExtraArguments(const char* argv[])
                 InputControl::ShowException("Arquivo para manipulação não informado.");
                 
             }
+            break;
             
         default:
             break;
