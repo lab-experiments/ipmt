@@ -10,7 +10,10 @@
 #include <string.h>
 #include <vector>
 #include <fstream>
+#include "error.h"
+#include "input_control.hpp"
 #include "manipulation_file.hpp"
+
 
 bool ManipulationFile::IsFile(const std::string& name)
 {
@@ -26,14 +29,12 @@ std::vector<std::string> ManipulationFile::GetFileLines(std::string file_name)
     std::string line;
     
     if (file.is_open()){
-        while (getline(file, line))
-        {
+        while (getline(file, line)){
             v_out_lines.push_back(line);
         }
         file.close();
     }else{
-        printf("Arquivo corrompido ou inexistente.");
-        exit(EXIT_FAILURE);
+        ShowException("Arquivo corrompido ou inexistente.");
     }
     
     return v_out_lines;
@@ -50,8 +51,7 @@ void ManipulationFile::CreateIndexFile(std::string file_name, std::vector<std::s
         file.close();
         
     }else{
-        printf("Arquivo corrompido ou inexistente.");
-        exit(EXIT_FAILURE);
+        ShowException("Arquivo corrompido ou inexistente.");
     }
 }
 
