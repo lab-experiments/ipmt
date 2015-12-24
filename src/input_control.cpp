@@ -52,11 +52,11 @@ CommandModel InputControl::SetCommand(int argc, const char* argv[]){
                 break ;
                 
             case 's':
-                command_model.SetCommandType(InputControl::CommandType::Search);
+                command_model.SetCommandType(InputControl::CommandType::SEARCH);
                 break;
                 
             case 'i':
-                command_model.SetCommandType(InputControl::CommandType::Index);
+                command_model.SetCommandType(InputControl::CommandType::INDEX);
                 break;
 
             case 'p':
@@ -126,7 +126,7 @@ void InputControl::GetExtraArguments(const char* argv[])
     InputControl::CommandType command_type;
     
     switch (command_type) {
-        case InputControl::Search:
+        case InputControl::SEARCH:
             if (extra_arguments_size > 1) {
                 command_model.SetPatternFile(v_result_args[0]);
                 command_model.SetFileName(v_result_args[1]);
@@ -137,7 +137,7 @@ void InputControl::GetExtraArguments(const char* argv[])
             }
             break;
             
-        case InputControl::Index:
+        case InputControl::INDEX:
             if (extra_arguments_size == 1){
                 command_model.SetFileName(v_result_args[0]);
                 
@@ -160,7 +160,7 @@ void InputControl::ShowHelp()
             --------- command structure ---------\n\
             $ ipmt index [options] textfile\n\
             $ ipmt search pattern indexfile\n\\n\
-            <options>:\n\
+            --------- command <options> ---------\n\
             -v, --version            :   Exibi a versão atual do programa.\n\\n\
             -h, --help               :   Print a help message briefly summarizing command-line options, and exit\n\\n\
             -p, --pattern patternfile:   Busca no arquivo de texto o ou os padrões em cada linha de código do arquivo de padrão(patternfile)\n\\n\
