@@ -21,15 +21,20 @@ int main(int argc, const char * argv[]) {
     CommandModel command_model = input_control.SetCommand(argc, argv);
     
     InputControl::CommandType command_type;
-    switch (command_type) {
+    switch (command_type)
+    {
         case InputControl::SEARCH:
-            Search::SearchPattern(command_model); // change for constructor Search()
+        {
+            Search search = Search(command_model);
+            search.Execute();
             break;
-            
+        }
         case InputControl::INDEX:
-            Indexing::IndexingFile(command_model);
+        {
+            Indexing index = Indexing(command_model);
+            index.Execute();
             break;
-            
+        }
         default:
             break;
     }
