@@ -11,52 +11,54 @@
 #include "manipulation_file.hpp"
 #include "boyer_moore_algorithm.hpp"
 #include "search_file.hpp"
+#include "search_result.hpp"
 
-void Search::SearchPattern(CommandModel command_model)
+Search::Search(CommandModel command_model)
 {
     Search::command_model = command_model;
+}
+
+void Search::Execute()
+{
     std::vector<std::string> v_pattern_lines = Search::GetPattern();
 
-    Search::SearchInFile(v_pattern_lines);
+    Search::SearchInPattern(v_pattern_lines);
 }
 
 
-void Search::SearchInFile(std::vector<std::string> v_pattern_lines)
+void Search::SearchInPattern(std::vector<std::string> v_pattern_lines)
 {
     std::ifstream file;
     file.open(Search::command_model.GetTextFileName());
     std::string line;
-    int index = 0;
-    std::vector<int> result_by_line;
-    
-    for (index; v_pattern_lines.size() > index; index++) {
+    std::vector<long> result_by_line;
+    std::vector<std::string> out_lines;
+
+    for (int index = 0; v_pattern_lines.size() > index; index++) {
+        
         if (file.is_open()){
-            while (std::getline(file, line)){
-               result_by_line.push_back(SearchUsingBoyerMoore(v_pattern_lines[index], line, duration));
-                
-                n_BM_duratio_excecution.push_back(duration);
+            while (std::getline(file, line))
+            {
+                result_by_line.push_back
+                (SearchUsingBoyerMoore(v_pattern_lines[index], line));
                 
                 if(!result_by_line.empty()){
-                    n_lines.push_back(index);
                     out_lines.push_back(line);
-                    occurrence_per_line.push_back((int)result_by_line.size());
                 }
             }
         }else{
             ShowException("Arquivo corrompido ou inexistente.");
         }
         
-        SearchResultOut(commad_model.GetTextFileNames()[j].c_str());
     }
     file.close();
 
 }
 
-std::vector<std::string> GetPattern()
+std::vector<std::string> Search::GetPattern()
 {
     std::vector<std::string> v_pattern_lines;
     std::string pattern_name = Search::command_model.GetPatternFile();
-    
     if(ManipulationFile::IsFile(pattern_name)){
         v_pattern_lines = ManipulationFile::GetFileLines(pattern_name);
         

@@ -19,12 +19,13 @@ class Search{
 private:
     
     CommandModel command_model;
-    void SearchInFile(std::vector<std::string> v_pattern_lines);
+    void SearchInPattern(std::vector<std::string> v_pattern_lines);
     std::vector<std::string> GetPattern();
 
 public:
     
-    void SearchPattern(CommandModel command_model);// change for constructor Search()
+    Search(CommandModel command_model);
+    void Execute();
     
 };
 #endif /* Search_File_hpp */
