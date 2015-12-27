@@ -83,7 +83,7 @@ $ ipmt search -pattern patternfile indexfile
 
 $ ipmt search -p patternfile indexfile
 ```
--   ***-p**, ***--pattern***: opção de argumento para padrão via arquivo de texto
+-   ***-p***, ***--pattern***: opção de argumento para padrão via arquivo de texto
 
 -   ***patternfile***: um arquivo de texto com extensão .txt, podendo conter um ou mais padrões por linha.
 
