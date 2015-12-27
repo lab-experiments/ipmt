@@ -15,6 +15,6 @@
 
 #include "command_model.hpp"
 
-std::vector<int> SearchUsingBoyerMoore(CommandModel command_line, std::string text_line, long long& duration);
+long SearchUsingBoyerMoore(std::string pattern_line, std::string text_line);
 
 #endif /* boyer_moore_algorithm_hpp */
