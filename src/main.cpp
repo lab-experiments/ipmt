@@ -23,7 +23,7 @@ int main(int argc, const char * argv[]) {
     InputControl::CommandType command_type;
     switch (command_type) {
         case InputControl::SEARCH:
-            Search::SearchPattern(command_model);
+            Search::SearchPattern(command_model); // change for constructor Search()
             break;
             
         case InputControl::INDEX:
