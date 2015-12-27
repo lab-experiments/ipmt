@@ -8,9 +8,6 @@
 
 #include <string.h>
 #include <vector>
-#include <sstream>
-#include <iostream>
-#include <algorithm>
 
 #include "command_model.hpp"
 #include "boyer_moore_algorithm.hpp"
@@ -19,16 +16,13 @@ using namespace std::chrono;
 
 #define MAX_CHAR_LEN 256
 
-// Preprocessamento da heuristica de bad character
 void BadCharacter(std::string pattern, int len_pattern, int bad_character[])
 {
     int i;
-    //inicializa todas as ocorrencias com -1
     for (i = 0; i < MAX_CHAR_LEN; i++)
     {
         bad_character[i] = -1;
     }
-    // Preenche o valor real da última ocorrência de um caractere
     for (i = 0; i < len_pattern; i++)
     {
         bad_character[pattern[i]] = i;
@@ -101,17 +95,16 @@ int MAX(int a, int b){
 
 
 
-long SearchUsingBoyerMoore(std::string patt, std::string text, long long& duration)
+long SearchUsingBoyerMoore(std::string pattern_line, std::string text_line)
 {
     // inicia contador para tempo de execução da função
-    high_resolution_clock::time_point begin_time = high_resolution_clock::now();
+    //  high_resolution_clock::time_point begin_time = high_resolution_clock::now();
     
-    std::string pattern = patt;
     std::vector<int> result;
-    int len_pattern = (int)pattern.length();
-    int len_text = (int)text.length();
-    char *p_pattern = &pattern[0u];
-    char *p_text = &text[0u];
+    int len_pattern = (int)pattern_line.length();
+    int len_text = (int)text_line.length();
+    char *p_pattern = &pattern_line[0u];
+    char *p_text = &text_line[0u];
     
     int i, j, good_suffix[MAX_CHAR_LEN], bad_character[MAX_CHAR_LEN];
     
@@ -133,8 +126,8 @@ long SearchUsingBoyerMoore(std::string patt, std::string text, long long& durati
         }
     }
     
-    high_resolution_clock::time_point end_time = high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - begin_time).count();
+   // high_resolution_clock::time_point end_time = high_resolution_clock::now();
+   // duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - begin_time).count();
 
     return result.size();
 }
