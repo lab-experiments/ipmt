@@ -9,6 +9,11 @@
 #ifndef IPMT_ERROR_H
 #define IPMT_ERROR_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
+
 void static ShowException(const char * message)
 {
     fprintf(stdout, message);
