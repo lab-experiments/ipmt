@@ -54,42 +54,43 @@ ipmt/
 ####Modo Indexação
 
 ```
-$ ipmt index [options] textfile [textfile...]
+$ ipmt index [options] textfile
 
 ```
--  ***textfile***: arquivo(s) com extensão .txt, podendo ser um ou vários. Os arquivos podem ser lidos via [wildcard](https://www.gnu.org/software/make/manual/html_node/Wildcard-Examples.html) ex: nome*.txt. 
+-  ***textfile***: arquivo com extensão .txt contendo texto para indexação. 
 
 - ***[option]***:
   - ***--compression LZ78***: a compressão dos arquivos de indexes passarão a serem realizados atravéz do algoritmo. Mais informações na seção de referências.
 
 ####Busca Padrão
 
+Busca exata utilizando o algoritmo Boyer Moore.
+
 ```
-$ ipmt search pattern [options] indexfile [indexfile...]
+$ ipmt search pattern indexfile
 
 ```
 
 -  ***pattern***: uma string com o padrão para busca no texto.
 
--  ***indexfile***: arquivo(s) com extensão .idx, podendo ser um ou vários. Os arquivos podem ser lidos via [wildcard](https://www.gnu.org/software/make/manual/html_node/Wildcard-Examples.html) ex: nome*.idx. 
+-  ***indexfile***: um arquivo com extensão .idx, contendo texto para busca de forma indexada e comprimido.
 
 :warning: - Arquivos serão lidos pela ordem de inserção.
 
 
 ```
-$ ipmt -pattern patternfile indexfile [indexfile...]
+$ ipmt search -pattern patternfile indexfile
 
     ou
 
-$ ipmt -p patternfile indexfile [indexfile...]
+$ ipmt search -p patternfile indexfile
 ```
 -   ***-p**, ***--pattern***: opção de argumento para padrão via arquivo de texto
 
--   ***patternfile***: arquivo de texto com extensão .txt, podendo conter um ou mais padrões por linha.
-Para mais de um arquivo de texto para busca e mais de um padrão de texto, cada padrão(linha do arquivo), será executada uma busca em todos os textos.
+-   ***patternfile***: um arquivo de texto com extensão .txt, podendo conter um ou mais padrões por linha.
 
--  ***indexfile***: arquivo(s) com extensão .idx, podendo ser um ou vários. Os arquivos podem ser lidos via [wildcard](https://www.gnu.org/software/make/manual/html_node/Wildcard-Examples.html) ex: nome*.idx. (Obs.Arquivos serão lidos pela ordem de inserção.)
 
+-  ***indexfile***: um arquivo com extensão .idx, contendo texto para busca de forma indexada e comprimido.
 
 ```
 $ipmt --help
