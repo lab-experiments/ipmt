@@ -15,8 +15,9 @@
 
 class ManipulationFile{    
         
-    bool IsFile(const std::string& name);
-    std::vector<std::string> GetFileLines(std::string file_name);
+public:
+    bool static IsFile(const std::string& name);
+    std::vector<std::string> static GetFileLines(std::string file_name);
     void CreateIndexFile(std::string file_name, std::vector<std::string>index_put_lines);
     std::ofstream GetIndexFileConvertedForTextFile(std::string file_name);
 

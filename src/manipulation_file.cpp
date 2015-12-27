@@ -45,6 +45,7 @@ void ManipulationFile::CreateIndexFile(std::string file_name, std::vector<std::s
 {
     std::ofstream file;
     file.open("./"+file_name+".idx");
+    
     if (file.is_open()){
         std::ostream_iterator<std::string> output_iterator(file, "\n");
         std::copy(index_put_lines.begin(), index_put_lines.end(), output_iterator);
