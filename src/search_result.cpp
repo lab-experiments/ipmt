@@ -13,6 +13,7 @@
 #include "command_model.hpp"
 #include "search_result.hpp"
 
+
 SearchResult::SearchResult(CommandModel command_model, vector<int> m_occurrence_per_line, vector<string> m_out_lines)
 {
     SearchResult::command_model = command_model;
@@ -23,6 +24,7 @@ SearchResult::SearchResult(CommandModel command_model, vector<int> m_occurrence_
     }
     
 }
+
 
 void SearchResult::SearchResultOut()
 {

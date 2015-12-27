@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <vector>
-
 #include "command_model.hpp"
 
 using namespace std;
@@ -20,11 +19,13 @@ using namespace std;
 class SearchResult{
     
 private :
+    
     CommandModel command_model;
     vector<int> m_occurrence_per_line;
     vector<string> m_out_lines;
     
 public:
+    
     SearchResult(CommandModel command_model, vector<int> m_occurrence_per_line, vector<string> m_out_lines);
     void SearchResultOut();
     void ShowTotalPatternOccurrence();
