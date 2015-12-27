@@ -75,8 +75,6 @@ $ ipmt search pattern indexfile
 
 -  ***indexfile***: um arquivo com extensão .idx, contendo texto para busca de forma indexada e comprimido.
 
-:warning: - Arquivos serão lidos pela ordem de inserção.
-
 
 ```
 $ ipmt search -pattern patternfile indexfile
