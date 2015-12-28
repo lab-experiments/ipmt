@@ -10,34 +10,15 @@
 #include <iostream>
 #include <sstream>
 
-#include "command_model.hpp"
-#include "input_control.hpp"
-#include "search_file.hpp"
-#include "indexing_file.hpp"
+#include "input_factory.hpp"
+#include "input_parser.hpp"
 
 int main(int argc, const char * argv[]) {
     
-    InputControl input_control;
-    CommandModel command_model = input_control.SetCommand(argc, argv);
+    InputParser input_parser;
+    Command command;
+    command = InputFactory::GetCommand(input_parser.SetCommand(argc,argv));
+    command.Execute();
     
-    InputControl::CommandType command_type;
-    switch (command_type)
-    {
-        case InputControl::SEARCH:
-        {
-            Search search = Search(command_model);
-            search.Execute();
-            break;
-        }
-        case InputControl::INDEX:
-        {
-            Indexing index = Indexing(command_model);
-            index.Execute();
-            break;
-        }
-        default:
-            break;
-    }
-
     return 0;
 }
