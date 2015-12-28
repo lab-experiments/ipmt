@@ -7,9 +7,10 @@
 //
 
 #include <string.h>
+#include <stdio.h>
 #include <vector>
+#include <sstream>
 
-#include "command_model.hpp"
 #include "boyer_moore_algorithm.hpp"
 
 using namespace std::chrono;

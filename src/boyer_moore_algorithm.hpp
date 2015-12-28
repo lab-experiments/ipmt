@@ -11,9 +11,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <vector>
-
-#include "command_model.hpp"
 
 long SearchUsingBoyerMoore(std::string pattern_line, std::string text_line);
 
