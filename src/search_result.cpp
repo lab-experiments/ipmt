@@ -9,40 +9,41 @@
 #include <stdio.h>
 #include <string.h>
 #include <vector>
-
-#include "command_model.hpp"
+#include <sstream>
 #include "search_result.hpp"
 
 
-SearchResult::SearchResult(CommandModel command_model, vector<int> m_occurrence_per_line, vector<string> m_out_lines)
+SearchResult::SearchResult(vector<long> occurrence_per_line, vector<string> out_lines, bool has_total_occurrence)
 {
-    SearchResult::command_model = command_model;
-    SearchResult::SearchResultOut();
-    
-    if(SearchResult::command_model.HasNumberTotalPattern()){
-        SearchResult::ShowTotalPatternOccurrence();
-    }
+    m_occurrence_per_line = occurrence_per_line;
+    m_out_lines = out_lines;
+    m_has_total_pattern_occurrence = has_total_occurrence;
     
 }
 
 
 void SearchResult::SearchResultOut()
 {
-    for (int i = 0; i < SearchResult::m_out_lines.size(); i++)
+    for (int i = 0; i < m_out_lines.size(); i++)
     {
-        printf("[%s] : %s \n ", SearchResult::command_model.GetTextFileName().c_str(), SearchResult::m_out_lines[i].c_str());
+        printf("%s \n", m_out_lines[i].c_str());
     }
     
     printf("----------------------------------------------\n");
     
     SearchResult::m_out_lines.clear();
+    
+    if(m_has_total_pattern_occurrence){
+        SearchResult::ShowTotalPatternOccurrence();
+    }
 }
 
 
 void SearchResult::ShowTotalPatternOccurrence()
 {
-    printf("Número total de ocorrências : %lu\n",
-           SearchResult::m_occurrence_per_line.size());
+    printf("Número total de ocorrências : %lu\n", m_occurrence_per_line.size());
     
-    SearchResult::m_occurrence_per_line.clear();
+    m_occurrence_per_line.clear();
 }
+
+

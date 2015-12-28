@@ -12,22 +12,23 @@
 #include <stdio.h>
 #include <string.h>
 #include <vector>
-#include "command_model.hpp"
+#include <sstream>
 
 using namespace std;
 
-class SearchResult{
-    
-private :
-    
-    CommandModel command_model;
-    vector<int> m_occurrence_per_line;
-    vector<string> m_out_lines;
+class SearchResult
+{
     
 public:
     
-    SearchResult(CommandModel command_model, vector<int> m_occurrence_per_line, vector<string> m_out_lines);
+    SearchResult(vector<long> m_occurrence_per_line, vector<string> m_out_lines, bool has_total_occurrence);
     void SearchResultOut();
+    
+private :
+    
+    vector<long> m_occurrence_per_line;
+    vector<string> m_out_lines;
+    bool m_has_total_pattern_occurrence;
     void ShowTotalPatternOccurrence();
 
 };
