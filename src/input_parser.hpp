@@ -10,27 +10,23 @@
 #define input_control_hpp
 
 #include <stdio.h>
-#include "command_model.hpp"
+#include "input_model.hpp"
 
 #define VERSION_CODE "1.0"
 
-class InputControl{
+class InputParser
+{
     
 private:
     
-    int index;
-    CommandModel command_model;
-    void GetExtraArguments(const char* argv[]);
-    void ShowHelp();
+      int m_index;
+      InputModel input_model;
+      void GetExtraArguments(const char* argv[]);
+      void ShowHelp();
     
 public:
     
-    CommandModel SetCommand(int argc, const char* args[]);
-
-    enum CommandType
-    {
-        INDEX, SEARCH
-    };
+      InputModel SetCommand(int argc, const char* args[]);
 
 };
 #endif /* input_control_hpp */

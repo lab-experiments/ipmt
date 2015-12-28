@@ -8,12 +8,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <glob.h>
 #include <getopt.h>
-#include <errno.h>
 #include <string.h>
-#include "error.h"
-#include "input_control.hpp"
+#include "error.hpp"
+#include "input_model.hpp"
+#include "input_parser.hpp"
 
 using namespace std;
 
@@ -30,8 +29,9 @@ const struct option CommandOptions[] =
     { 0,              0,                 0,  0 },
 };
 
-CommandModel InputControl::SetCommand(int argc, const char* argv[]){
-    InputControl::index =  argc;
+InputModel InputParser::SetCommand(int argc, const char* argv[])
+{
+    m_index =  argc;
     int n_option;
     const char* option_string = "vhnisp:c:t:";
 
@@ -44,62 +44,62 @@ CommandModel InputControl::SetCommand(int argc, const char* argv[]){
                 break ;
                 
             case 'h':
-                InputControl::ShowHelp() ;
+                InputParser::ShowHelp() ;
                 break ;
                 
             case 'n':
-                command_model.SetHasNumberTotalPattern(true);
+                input_model.SetHasNumberTotalPattern(true);
                 break ;
                 
             case 's':
-                command_model.SetCommandType(InputControl::CommandType::SEARCH);
+                input_model.SetCommandType(InputModel::InputType::search);
                 break;
                 
             case 'i':
-                command_model.SetCommandType(InputControl::CommandType::INDEX);
+                input_model.SetCommandType(InputModel::InputType::index);
                 break;
 
             case 'p':
-                command_model.SetPatternFile(optarg);
+                input_model.SetPatternFile(optarg);
                 break ;
                 
             case 'c':
-                if(atoi(optarg) == command_model.CompressionType::LZ77){
-                    command_model.SetCompressioType(command_model.CompressionType::LZ77);
+                if(atoi(optarg) == input_model.CompressionType::LZ77){
+                    input_model.SetCompressioType(input_model.CompressionType::LZ77);
                     
-                }else if(atoi(optarg) == command_model.CompressionType::LZ78){
-                    command_model.SetCompressioType(command_model.CompressionType::LZ78);
+                }else if(atoi(optarg) == input_model.CompressionType::LZ78){
+                    input_model.SetCompressioType(input_model.CompressionType::LZ78);
                     
                 }else{
-                    ShowException("A opção --compression, requer um argumento do tipo 0 para LZ77 ou 1 para LZ78.\n Mais informações cheque $impt --help.");
+                    Error::ShowException("A opção --compression, requer um argumento do tipo 0 para LZ77 ou 1 para LZ78.\n Mais informações cheque $impt --help.");
                     
                 }
                 break ;
                 
             case 't':
-                if(atoi(optarg) == command_model.IndexType::suffix_array){
-                    command_model.SetIndexType(command_model.IndexType::suffix_array);
+                if(atoi(optarg) == input_model.IndexType::suffix_array){
+                    input_model.SetIndexType(input_model.IndexType::suffix_array);
                     
-                }else if(atoi(optarg) == command_model.IndexType::suffix_tree){
-                    command_model.SetIndexType(command_model.IndexType::suffix_tree);
+                }else if(atoi(optarg) == input_model.IndexType::suffix_tree){
+                    input_model.SetIndexType(input_model.IndexType::suffix_tree);
                     
                 }else{
-                    ShowException("A opção --index, requer um argumento do tipo 0 para suffixtree ou 1 para arraysuffix.\n Mais informações cheque $impt --help.");
+                    Error::ShowException("A opção --index, requer um argumento do tipo 0 para suffixtree ou 1 para arraysuffix.\n Mais informações cheque $impt --help.");
                 }
                 break ;
 
             case '?':
                 if (optopt == 'c'){
-                    ShowException("A opção --compression, requer um argumento do tipo 0 para LZ77 ou 1 para LZ78.\n Mais informações cheque $impt --help.");
+                    Error::ShowException("A opção --compression, requer um argumento do tipo 0 para LZ77 ou 1 para LZ78.\n Mais informações cheque $impt --help.");
                 
                 }else if (optopt == 't'){
-                    ShowException("A opção --index, requer um argumento do tipo 0 para suffixtree ou 1 para arraysuffix.\n Mais informações cheque $impt --help.");
+                    Error::ShowException("A opção --index, requer um argumento do tipo 0 para suffixtree ou 1 para arraysuffix.\n Mais informações cheque $impt --help.");
                 
                 }else if(optopt == 'p'){
-                    ShowException("A opção -p ou --pattern, requer um argumento do tipo arquivo de texto.\n Mais informações cheque $impt --help.");
+                    Error::ShowException("A opção -p ou --pattern, requer um argumento do tipo arquivo de texto.\n Mais informações cheque $impt --help.");
                     
                 }else{
-                    ShowException("Comando inválido. Cheque $impt --help.");
+                    Error::ShowException("Comando inválido. Cheque $impt --help.");
                 
                 }
                 break ;
@@ -109,40 +109,40 @@ CommandModel InputControl::SetCommand(int argc, const char* argv[]){
         }
     }
     
-    InputControl::GetExtraArguments(argv);
-    return command_model;
+    GetExtraArguments(argv);
+    return input_model;
 }
 
 
-void InputControl::GetExtraArguments(const char* argv[])
+void InputParser::GetExtraArguments(const char* argv[])
 {
     std::vector<std::string> v_result_args;
-    for (int i = optind; i < InputControl::index; i++)
+    for (int i = optind; i < m_index; i++)
     {
         v_result_args.push_back(argv[i]);
     }
     
     long extra_arguments_size = v_result_args.size();
-    InputControl::CommandType command_type;
+    InputModel::InputType input_type;
     
-    switch (command_type) {
-        case InputControl::SEARCH:
+    switch (input_type) {
+        case InputModel::search:
             if (extra_arguments_size > 1) {
-                command_model.SetPatternFile(v_result_args[0]);
-                command_model.SetFileName(v_result_args[1]);
+                input_model.SetPatternFile(v_result_args[0]);
+                input_model.SetFileName(v_result_args[1]);
                 
             }else{
-                ShowException("Arquivo para manipulação não informado.");
+                Error::ShowException("Arquivo para manipulação não informado.");
                 
             }
             break;
             
-        case InputControl::INDEX:
+        case InputModel::index:
             if (extra_arguments_size == 1){
-                command_model.SetFileName(v_result_args[0]);
+                input_model.SetFileName(v_result_args[0]);
                 
             }else{
-                ShowException("Arquivo para manipulação não informado.");
+                Error::ShowException("Arquivo para manipulação não informado.");
                 
             }
             break;
@@ -153,7 +153,7 @@ void InputControl::GetExtraArguments(const char* argv[])
 }
 
 
-void InputControl::ShowHelp()
+void InputParser::ShowHelp()
 {
     fprintf(stdout, "ipmt version %s \n\
             \n\
