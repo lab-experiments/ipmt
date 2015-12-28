@@ -13,21 +13,10 @@
 #include <string.h>
 #include <vector>
 #include <sstream>
-#include <iostream>
 
 using namespace std;
 
-class CommandModel {
-    
-private:
-    
-    string m_pattern_file;
-    string m_file_name;
-    bool m_has_number_total_pattern;
-    int m_compression_type;
-    int m_index_type;
-    int m_command_type;
-    
+class InputModel {
     
 public:
     
@@ -45,16 +34,32 @@ public:
     int GetIndexType();
     int GetCommandType();
     
-    enum CompressionType{
-        LZ77 = 0,
-        LZ78 = 1
+    enum CompressionType
+    {
+        LZ77,
+        LZ78
     };
     
-    enum IndexType{
-        suffix_tree = 0,
-        suffix_array = 1
+    enum IndexType
+    {
+        suffix_tree,
+        suffix_array
     };
-
+    
+    enum InputType
+    {
+        index,
+        search
+    };
+    
+private:
+    
+    string m_pattern_file;
+    string m_file_name;
+    bool m_has_number_total_pattern;
+    int m_compression_type;
+    int m_index_type;
+    int m_command_type;
 
 };
 #endif /* command_model_hpp */
