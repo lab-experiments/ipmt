@@ -6,30 +6,31 @@
 //  Copyright © 2015 tmbs. All rights reserved.
 //
 
-#include "error.h"
-#include "command_model.hpp"
+#include "error.hpp"
 #include "manipulation_file.hpp"
 #include "boyer_moore_algorithm.hpp"
-#include "search_file.hpp"
 #include "search_result.hpp"
+#include "search_file.hpp"
 
-Search::Search(CommandModel command_model)
+
+Search::Search(InputModel input_model)
 {
-    Search::command_model = command_model;
+    SetInputModel(input_model);
 }
+
 
 void Search::Execute()
 {
     std::vector<std::string> v_pattern_lines = Search::GetPattern();
 
-    Search::SearchInPattern(v_pattern_lines);
+    SearchInPattern(v_pattern_lines);
 }
 
 
 void Search::SearchInPattern(std::vector<std::string> v_pattern_lines)
 {
     std::ifstream file;
-    file.open(Search::command_model.GetTextFileName());
+    file.open(GetInputModel().GetTextFileName());
     std::string line;
     std::vector<long> result_by_line;
     std::vector<std::string> out_lines;
@@ -47,18 +48,21 @@ void Search::SearchInPattern(std::vector<std::string> v_pattern_lines)
                 }
             }
         }else{
-            ShowException("Arquivo corrompido ou inexistente.");
+            Error::ShowException("Arquivo corrompido ou inexistente.");
         }
         
     }
     file.close();
 
+    
+    SearchResult  search_result = SearchResult(result_by_line, out_lines, GetInputModel().HasNumberTotalPattern());
+    search_result.SearchResultOut();
 }
 
 std::vector<std::string> Search::GetPattern()
 {
     std::vector<std::string> v_pattern_lines;
-    std::string pattern_name = Search::command_model.GetPatternFile();
+    std::string pattern_name = GetInputModel().GetPatternFile();
     if(ManipulationFile::IsFile(pattern_name)){
         v_pattern_lines = ManipulationFile::GetFileLines(pattern_name);
         

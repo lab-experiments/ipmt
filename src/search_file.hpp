@@ -10,22 +10,24 @@
 #define search_file_hpp
 
 #include <stdio.h>
-#include "command_model.hpp"
+#include <vector>
+#include <string>
+#include "command.hpp"
 
 using namespace std;
 
-class Search{
-
-private:
-    
-    CommandModel command_model;
-    void SearchInPattern(std::vector<std::string> v_pattern_lines);
-    std::vector<std::string> GetPattern();
+class Search : public Command
+{
 
 public:
     
-    Search(CommandModel command_model);
+    Search(InputModel input_model);
     void Execute();
+    
+private:
+    
+    void SearchInPattern(vector<string> v_pattern_lines);
+    std::vector<string> GetPattern();
     
 };
 #endif /* Search_File_hpp */
