@@ -14,10 +14,16 @@
 #include <errno.h>
 #include <string.h>
 
-void static ShowException(const char * message)
+class Error
 {
-    fprintf(stdout, message);
-    exit(EXIT_FAILURE);
-}
-
+    
+public:
+    
+    void static ShowException(const char * message)
+    {
+        fprintf(stdout, message);
+        exit(EXIT_FAILURE);
+    }
+    
+};
 #endif /* IPMT_ERROR_H */
