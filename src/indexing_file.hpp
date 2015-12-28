@@ -10,16 +10,18 @@
 #define indexing_file_hpp
 
 #include <stdio.h>
-#include "command_model.hpp"
+#include "command.hpp"
 
-class Indexing{
-
-private:
-    
+class Indexing : public Command
+{
     
 public:
     
-    void static IndexingFile(CommandModel command_model);
+    Indexing(InputModel input_model);
+    void Execute();
+    
+private:
+    
 
 };
 #endif /* indexing_file_hpp */

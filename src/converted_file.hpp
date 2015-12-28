@@ -11,15 +11,14 @@
 
 #include <stdio.h>
 
-class ConvertedFile{
+class ConvertedFile
+{
 
-private:
-    
-    
     
 public:
     
-    
+private:
+
 
 };
 #endif /* converted_file_hpp */

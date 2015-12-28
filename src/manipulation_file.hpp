@@ -13,13 +13,20 @@
 #include <vector>
 #include <fstream>
 
-class ManipulationFile{    
-        
+class ManipulationFile
+{
+    
 public:
+    
     bool static IsFile(const std::string& name);
+    
     std::vector<std::string> static GetFileLines(std::string file_name);
+    
     void CreateIndexFile(std::string file_name, std::vector<std::string>index_put_lines);
+    
     std::ofstream GetIndexFileConvertedForTextFile(std::string file_name);
+    
+    int GetCompressionType(std::string line);
 
 };
 #endif /* manipulation_file_hpp */

@@ -10,8 +10,7 @@
 #include <string.h>
 #include <vector>
 #include <fstream>
-#include "error.h"
-#include "input_control.hpp"
+#include "error.hpp"
 #include "manipulation_file.hpp"
 
 
@@ -20,6 +19,7 @@ bool ManipulationFile::IsFile(const std::string& name)
     struct stat buffer;
     return (stat (name.c_str(), &buffer) == 0);
 }
+
 
 std::vector<std::string> ManipulationFile::GetFileLines(std::string file_name)
 {    
@@ -34,11 +34,12 @@ std::vector<std::string> ManipulationFile::GetFileLines(std::string file_name)
         }
         file.close();
     }else{
-        ShowException("Arquivo corrompido ou inexistente.");
+        Error::ShowException("Arquivo corrompido ou inexistente.");
     }
     
     return v_out_lines;
 }
+
 
 
 void ManipulationFile::CreateIndexFile(std::string file_name, std::vector<std::string>index_put_lines)
@@ -52,9 +53,10 @@ void ManipulationFile::CreateIndexFile(std::string file_name, std::vector<std::s
         file.close();
         
     }else{
-        ShowException("Arquivo corrompido ou inexistente.");
+        Error::ShowException("Arquivo corrompido ou inexistente.");
     }
 }
+
 
 
 std::ofstream ManipulationFile::GetIndexFileConvertedForTextFile(std::string file_name)
@@ -67,3 +69,13 @@ std::ofstream ManipulationFile::GetIndexFileConvertedForTextFile(std::string fil
 
     return file;
 }
+
+
+
+int ManipulationFile::GetCompressionType(std::string line)
+{
+    int compression_type = line.at(0);
+    
+    return compression_type;
+}
+
