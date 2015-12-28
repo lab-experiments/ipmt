@@ -7,3 +7,13 @@
 //
 
 #include "indexing_file.hpp"
+
+Indexing::Indexing(InputModel input_model)
+{
+    SetInputModel(input_model);
+}
+
+void Indexing::Execute()
+{
+
+}
