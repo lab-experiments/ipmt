@@ -21,14 +21,15 @@ class SearchResult
     
 public:
     
-    SearchResult(vector<long> m_occurrence_per_line, vector<string> m_out_lines, bool has_total_occurrence);
+    SearchResult(long m_occurrence_per_line, vector<string> m_out_lines, bool has_total_occurrence);
     void SearchResultOut();
     
 private :
     
-    vector<long> m_occurrence_per_line;
+    long m_occurrence_per_line;
     vector<string> m_out_lines;
     bool m_has_total_pattern_occurrence;
+    
     void ShowTotalPatternOccurrence();
 
 };

@@ -13,11 +13,11 @@
 #include "search_result.hpp"
 
 
-SearchResult::SearchResult(vector<long> occurrence_per_line, vector<string> out_lines, bool has_total_occurrence)
+SearchResult::SearchResult(long occurrence_per_line, vector<string> out_lines, bool has_total_occurrence)
 {
-    m_occurrence_per_line = occurrence_per_line;
     m_out_lines = out_lines;
     m_has_total_pattern_occurrence = has_total_occurrence;
+    m_occurrence_per_line = occurrence_per_line;
     
 }
 
@@ -31,7 +31,7 @@ void SearchResult::SearchResultOut()
     
     printf("----------------------------------------------\n");
     
-    SearchResult::m_out_lines.clear();
+    m_out_lines.clear();
     
     if(m_has_total_pattern_occurrence){
         SearchResult::ShowTotalPatternOccurrence();
@@ -41,9 +41,8 @@ void SearchResult::SearchResultOut()
 
 void SearchResult::ShowTotalPatternOccurrence()
 {
-    printf("Número total de ocorrências : %lu\n", m_occurrence_per_line.size());
+    printf("Número total de ocorrências : %lu\n",m_occurrence_per_line);
     
-    m_occurrence_per_line.clear();
 }
 
 
