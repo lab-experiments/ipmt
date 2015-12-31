@@ -6,7 +6,6 @@
 //  Copyright © 2015 tmbs. All rights reserved.
 //
 
-#include "command.hpp"
 #include "search_file.hpp"
 #include "indexing_file.hpp"
 #include "command_factory.hpp"
