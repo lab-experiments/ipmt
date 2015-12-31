@@ -42,8 +42,8 @@ public:
     
     enum IndexType
     {
-        suffix_tree,
-        suffix_array
+        suffix_array,
+        suffix_tree
     };
     
     enum InputType
