@@ -13,8 +13,8 @@
 
 int main(int argc, const char * argv[]) {
     
-    InputParser input_parser;
-    Command *command = CommandFactory::GetCommand(input_parser.SetCommand(argc,argv));
+    InputParser input_parser = InputParser(argc, argv);
+    Command *command = CommandFactory::GetCommand(input_parser.SetCommand());
     command->Execute();
     
     return 0;

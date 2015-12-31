@@ -19,14 +19,18 @@ class InputParser
     
 private:
     
-      int m_index;
-      InputModel input_model;
-      void GetExtraArguments(const char* argv[]);
-      void ShowHelp();
+    int m_index;
+    int m_argc;
+    char** m_args;
+    
+    InputModel input_model;
+    void GetExtraArguments();
+    void GetOptionsArguments();
+    void ShowHelp();
     
 public:
-    
-      InputModel SetCommand(int argc, const char* args[]);
+    InputParser(int argc, const char* argv[]);
+    InputModel SetCommand();
 
 };
 #endif /* input_control_hpp */

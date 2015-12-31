@@ -6,9 +6,9 @@
 //  Copyright © 2015 tmbs. All rights reserved.
 //
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <getopt.h>
+#include <errno.h>
 #include <string.h>
 #include "error.hpp"
 #include "input_model.hpp"
@@ -21,21 +21,33 @@ const struct option CommandOptions[] =
     {"version",       no_argument,       0, 'v'},
     {"help",          no_argument,       0, 'h'},
     {"count",         no_argument,       0, 'n'},
-    {"index",         no_argument,       0, 'i'},
-    {"search",        no_argument,       0, 's'},
-    {"pattern",       required_argument, 0, 'p'}, // pattern text file
-    {"compression",   required_argument, 0, 'c'}, // integer type
-    {"index_type",    required_argument, 0, 't'}, // integer type
+    {"pattern",       required_argument, 0, 'p'},
+    {"compression",   required_argument, 0, 'c'},
+    {"index_type",    required_argument, 0, 'i'},
     { 0,              0,                 0,  0 },
 };
 
-InputModel InputParser::SetCommand(int argc, const char* argv[])
+InputParser::InputParser(int argc, const char* argv[])
 {
-    m_index =  argc;
-    int n_option;
-    const char* option_string = "vhnisp:c:t:";
+    m_argc = argc;
+    m_args = (char**)argv;
+}
 
-    while((n_option = getopt_long(argc,(char**)argv, option_string, CommandOptions, NULL)) > 0)
+InputModel InputParser::SetCommand()
+{
+    InputParser::GetOptionsArguments();
+    InputParser::GetExtraArguments();
+    
+    return input_model;
+}
+
+
+void InputParser::GetOptionsArguments()
+{
+    const char* option_string = "vhnp:c:i:";
+    int n_option = getopt_long(m_argc, m_args, option_string, CommandOptions, NULL);
+
+    while(n_option > 0)
     {
         switch (n_option)
         {
@@ -50,14 +62,6 @@ InputModel InputParser::SetCommand(int argc, const char* argv[])
             case 'n':
                 input_model.SetHasNumberTotalPattern(true);
                 break ;
-                
-            case 's':
-                input_model.SetCommandType(InputModel::InputType::search);
-                break;
-                
-            case 'i':
-                input_model.SetCommandType(InputModel::InputType::index);
-                break;
 
             case 'p':
                 input_model.SetPatternFile(optarg);
@@ -109,46 +113,48 @@ InputModel InputParser::SetCommand(int argc, const char* argv[])
         }
     }
     
-    GetExtraArguments(argv);
-    return input_model;
 }
 
 
-void InputParser::GetExtraArguments(const char* argv[])
+
+void InputParser::GetExtraArguments()
 {
-    std::vector<std::string> v_result_args;
-    for (int i = optind; i < m_index; i++)
-    {
-        v_result_args.push_back(argv[i]);
-    }
+    if (optind < m_argc){
+        std::vector<std::string> v_result_args;
+
+        for (int i = optind; i < m_argc; i++)
+        {
+            v_result_args.push_back(m_args[i]);
+        }
     
-    long extra_arguments_size = v_result_args.size();
-    InputModel::InputType input_type;
+        long extra_arguments_size = v_result_args.size();
     
-    switch (input_type) {
-        case InputModel::search:
-            if (extra_arguments_size > 1) {
-                input_model.SetPatternFile(v_result_args[0]);
+        if (v_result_args[0] == "search") {
+            input_model.SetCommandType(InputModel::InputType::search);
+
+            if (extra_arguments_size > 2) {
+                input_model.SetPatternFile(v_result_args[1]);
+                input_model.SetFileName(v_result_args[2]);
+                
+            }else{
+                Error::ShowException("Comamdo mal formatado. Siga os exemplos via -h ou -help.");
+                
+            }
+            
+        } else if (v_result_args[0] == "index"){
+            input_model.SetCommandType(InputModel::InputType::index);
+
+            if (extra_arguments_size > 1){
                 input_model.SetFileName(v_result_args[1]);
                 
             }else{
-                Error::ShowException("Arquivo para manipulação não informado.");
+                Error::ShowException("Comamdo mal formatado. Siga os exemplos via -h ou -help.");
                 
             }
-            break;
-            
-        case InputModel::index:
-            if (extra_arguments_size == 1){
-                input_model.SetFileName(v_result_args[0]);
-                
-            }else{
-                Error::ShowException("Arquivo para manipulação não informado.");
-                
-            }
-            break;
-            
-        default:
-            break;
+        }
+    }else{
+        Error::ShowException("Argumentos não especificados. Siga os exemplos via -h ou -help.");
+
     }
 }
 
@@ -157,14 +163,19 @@ void InputParser::ShowHelp()
 {
     fprintf(stdout, "ipmt version %s \n\
             \n\
-            --------- command structure ---------\n\
+            -v, --version            :   Exibe a versão atual do programa; \n\\n\
+            -h, --help               :   Exibe texto com opções e exemplos de comando; \n\\n\\n\
+            --------- index command structure ---------\n\
             $ ipmt index [options] textfile\n\
-            $ ipmt search pattern indexfile\n\\n\
             --------- command <options> ---------\n\
-            -v, --version            :   Exibi a versão atual do programa.\n\\n\
-            -h, --help               :   Print a help message briefly summarizing command-line options, and exit\n\\n\
-            -p, --pattern patternfile:   Busca no arquivo de texto o ou os padrões em cada linha de código do arquivo de padrão(patternfile)\n\\n\
             --compression            :   Recebe como argumento os valores 0 referente ao algoritmo LZ77 e 1 referente ao algoritmo LZ78;\n\n\
+            --indextype              :   Recebe como argumento 0 referente a array de sufixo e 1 referente a árvore de sufixo; \n\\n\
+            textfile                 : Arquivo em formato txt contendo texto para indexação\n\\n\\n\
+            --------- search command structure ---------\n\
+            $ ipmt search pattern indexfile\n\
+            --------- command <options> ---------\n\
+            -p, --pattern patternfile:   Busca no arquivo de texto o ou os padrões em cada linha de código do arquivo de padrão(patternfile);\n\\n\
+            -c, --cout               :   Imprime uma linha com o total de ocorrências do padrão no arquivo; \n\\n\
             patternfile              :   Arquivo de texto contendo um ou mais padrões. Cada padrão é estruturado em uma linha do arquivo;\n\\n\
             indexfile                :   Arquivo com conteúdo de busca após sofrer indexação;\n\\n\
             pattern                  :   String contendo padrão para busca;", VERSION_CODE);
