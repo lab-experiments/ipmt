@@ -9,24 +9,30 @@
 #ifndef manipulation_file_hpp
 #define manipulation_file_hpp
 
+#include <sys/stat.h>
 #include <string.h>
 #include <vector>
 #include <fstream>
+
+using namespace std;
 
 class ManipulationFile
 {
     
 public:
     
-    bool static IsFile(const std::string& name);
+    static bool IsFile(const string& name);
     
-    std::vector<std::string> static GetFileLines(std::string file_name);
+    vector<string> static GetFileLines(string file_name);
     
-    void CreateIndexFile(std::string file_name, std::vector<std::string>index_put_lines);
+    static void CreateIndexFile(string file_name, vector<string>index_put_lines);
     
-    std::ofstream GetIndexFileConvertedForTextFile(std::string file_name);
+    int GetCompressionType(string line);
     
-    int GetCompressionType(std::string line);
+private:
+    
+    static string GetNameWithoutPrefix(string file_name);
+    
 
 };
 #endif /* manipulation_file_hpp */

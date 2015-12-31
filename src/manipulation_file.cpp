@@ -6,27 +6,23 @@
 //  Copyright © 2015 tmbs. All rights reserved.
 //
 
-#include <sys/stat.h>
-#include <string.h>
-#include <vector>
-#include <fstream>
 #include "error.hpp"
 #include "manipulation_file.hpp"
 
 
-bool ManipulationFile::IsFile(const std::string& name)
+bool ManipulationFile::IsFile(const string& name)
 {
     struct stat buffer;
     return (stat (name.c_str(), &buffer) == 0);
 }
 
 
-std::vector<std::string> ManipulationFile::GetFileLines(std::string file_name)
+vector<string> ManipulationFile::GetFileLines(string file_name)
 {    
-    std::ifstream file;
+    ifstream file;
     file.open(file_name);
-    std::vector<std::string> v_out_lines;
-    std::string line;
+    vector<string> v_out_lines;
+    string line;
     
     if (file.is_open()){
         while (getline(file, line)){
@@ -42,37 +38,36 @@ std::vector<std::string> ManipulationFile::GetFileLines(std::string file_name)
 
 
 
-void ManipulationFile::CreateIndexFile(std::string file_name, std::vector<std::string>index_put_lines)
+void ManipulationFile::CreateIndexFile(string file_name, vector<string>index_put_lines)
 {
-    std::ofstream file;
-    file.open("./"+file_name+".idx");
-    
+    string name = ManipulationFile::GetNameWithoutPrefix(file_name);
+    ofstream file;
+    file.open("./"+ name +".idx");
+
     if (file.is_open()){
-        std::ostream_iterator<std::string> output_iterator(file, "\n");
-        std::copy(index_put_lines.begin(), index_put_lines.end(), output_iterator);
+        ostream_iterator<string> output_iterator(file, "\n");
+        copy(index_put_lines.begin(), index_put_lines.end(), output_iterator);
+        
         file.close();
         
     }else{
-        Error::ShowException("Arquivo corrompido ou inexistente.");
+        Error::ShowException("Problema na construção do arquivo de index.");
     }
 }
 
 
 
-std::ofstream ManipulationFile::GetIndexFileConvertedForTextFile(std::string file_name)
+string ManipulationFile::GetNameWithoutPrefix(string file_name)
 {
     size_t lastindex = file_name.find_last_of(".");
-    std::string rawname = file_name.substr(0, lastindex);
+    string rawname = file_name.substr(0, lastindex);
 
-    std::ofstream file;
-    file.open(rawname+(".txt"));
-
-    return file;
+    return rawname;
 }
 
 
 
-int ManipulationFile::GetCompressionType(std::string line)
+int ManipulationFile::GetCompressionType(string line)
 {
     int compression_type = line.at(0);
     
