@@ -26,8 +26,11 @@ public:
     
 private:
     
+    long m_n_ocurrence_by_line;
+    vector<string> m_out_lines;
+    
     void SearchInPattern(vector<string> v_pattern_lines);
-    std::vector<string> GetPattern();
+    vector<string> GetPattern();
     
 };
 #endif /* Search_File_hpp */

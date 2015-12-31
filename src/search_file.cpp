@@ -21,30 +21,31 @@ Search::Search(InputModel input_model)
 
 void Search::Execute()
 {
-    std::vector<std::string> v_pattern_lines = Search::GetPattern();
+    vector<string> v_pattern_lines = Search::GetPattern();
 
     SearchInPattern(v_pattern_lines);
+    
+    SearchResult  search_result = SearchResult(m_n_ocurrence_by_line, m_out_lines, GetInputModel().HasNumberTotalPattern());
+    search_result.SearchResultOut();
+
 }
 
 
-void Search::SearchInPattern(std::vector<std::string> v_pattern_lines)
+void Search::SearchInPattern(vector<string> v_pattern_lines)
 {
-    std::ifstream file;
+    ifstream file;
     file.open(GetInputModel().GetTextFileName());
-    std::string line;
-    std::vector<long> result_by_line;
-    std::vector<std::string> out_lines;
+    string line;
 
     for (int index = 0; v_pattern_lines.size() > index; index++) {
         
         if (file.is_open()){
-            while (std::getline(file, line))
+            while (getline(file, line))
             {
-                result_by_line.push_back
-                (SearchUsingBoyerMoore(v_pattern_lines[index], line));
-                
-                if(!result_by_line.empty()){
-                    out_lines.push_back(line);
+                m_n_ocurrence_by_line = SearchUsingBoyerMoore(v_pattern_lines[index], line);
+                if(m_n_ocurrence_by_line != 0){
+                    m_out_lines.push_back(line);
+                    m_n_ocurrence_by_line ++;
                 }
             }
         }else{
@@ -52,17 +53,14 @@ void Search::SearchInPattern(std::vector<std::string> v_pattern_lines)
         }
         
     }
-    file.close();
-
     
-    SearchResult  search_result = SearchResult(result_by_line, out_lines, GetInputModel().HasNumberTotalPattern());
-    search_result.SearchResultOut();
+    file.close();
 }
 
-std::vector<std::string> Search::GetPattern()
+vector<string> Search::GetPattern()
 {
-    std::vector<std::string> v_pattern_lines;
-    std::string pattern_name = GetInputModel().GetPatternFile();
+    vector<std::string> v_pattern_lines;
+    string pattern_name = GetInputModel().GetPatternFile();
     if(ManipulationFile::IsFile(pattern_name)){
         v_pattern_lines = ManipulationFile::GetFileLines(pattern_name);
         
