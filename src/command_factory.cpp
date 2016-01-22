@@ -1,15 +1,14 @@
-//
-//  InputFactory.cpp
-//  ipmt-xcode
-//
-//  Created by Thaisa Mirely
-//  Copyright © 2015 tmbs. All rights reserved.
-//
+/*
+  @file: InputFactory.cpp
+  @brief: arquivo de implementação do método do método GetCommand.
+  ipmt
 
-#include "search_file.hpp"
-#include "indexing_file.hpp"
+*/
+
 #include "command_factory.hpp"
-
+/*
+ @brief: função responsável por retorna o objeto referente ao comando informado via argumentos.
+ */
 Command *CommandFactory::GetCommand(InputModel input_model)
 {
     Command *command = NULL;

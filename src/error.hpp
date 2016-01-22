@@ -10,18 +10,20 @@
 #define IPMT_ERROR_H
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <errno.h>
-#include <string.h>
 
 class Error
 {
     
 public:
-    
-    void static ShowException(const char * message)
+    /*
+      @brief: método para exibição de mensagem de erro e finalização da aplicação.
+     */
+    void static ShowException(const char* message)
     {
-        fprintf(stdout, message);
+        fprintf(stdout, "%s",message);
         exit(EXIT_FAILURE);
     }
     

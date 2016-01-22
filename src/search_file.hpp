@@ -1,10 +1,7 @@
-//
-//  Search.hpp
-//  ipmt
-//
-//  Created by Thaisa Mirely.
-//  Copyright © 2015 tmbs. All rights reserved.
-//
+/*
+  @file: Search.hpp
+  @brief: Classe responsável pelo comando de busca. Descompacta o arquivo e realiza uma busca com base no padrão formado. 
+*/
 
 #ifndef search_file_hpp
 #define search_file_hpp
@@ -13,6 +10,10 @@
 #include <vector>
 #include <string>
 #include "command.hpp"
+#include "error.hpp"
+#include "manipulation_file.hpp"
+#include "lz78_algorithm.hpp"
+#include "search_result.hpp"
 
 using namespace std;
 
@@ -26,11 +27,13 @@ public:
     
 private:
     
-    long m_n_ocurrence_by_line;
+    //long m_number_ocurrence;
+    string m_file_name;
     vector<string> m_out_lines;
     
-    void SearchInPattern(vector<string> v_pattern_lines);
     vector<string> GetPattern();
+    void DecodeFile();
+    void SearchPatternInIndex();
     
 };
 #endif /* Search_File_hpp */

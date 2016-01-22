@@ -3,9 +3,10 @@
 ##########################################
 
 # Compiler options
-CC=g++
+
+CC=g++ -std=c++11
 CFLAGS=-c -Wall
-EXECUTABLE_NAME=pmt
+EXECUTABLE_NAME=ipmt
 
 # Folders
 BIN=../bin

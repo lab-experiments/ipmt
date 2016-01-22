@@ -1,61 +1,84 @@
-//
-//  Search.cpp
-//  ipmt
-//
-//  Created by Thaisa Mirely.
-//  Copyright © 2015 tmbs. All rights reserved.
-//
+/*
+  @file: search_file.cpp
+  @brief: classe de implementação dos dos métodos de decodificação e busca.
+*/
 
-#include "error.hpp"
-#include "manipulation_file.hpp"
-#include "boyer_moore_algorithm.hpp"
-#include "search_result.hpp"
+
 #include "search_file.hpp"
-
 
 Search::Search(InputModel input_model)
 {
     SetInputModel(input_model);
+    m_file_name = GetInputModel().GetTextFileName();
+
 }
 
 
 void Search::Execute()
 {
-    vector<string> v_pattern_lines = Search::GetPattern();
 
-    SearchInPattern(v_pattern_lines);
+    DecodeFile();
     
-    SearchResult  search_result = SearchResult(m_n_ocurrence_by_line, m_out_lines, GetInputModel().HasNumberTotalPattern());
-    search_result.SearchResultOut();
+//    SearchPatternInIndex();
+//    
+//    SearchResult  search_result = SearchResult(m_number_ocurrence, m_out_lines, GetInputModel().HasNumberTotalPattern());
+//    search_result.SearchResultOut();
+    
 
 }
 
-
-void Search::SearchInPattern(vector<string> v_pattern_lines)
+void Search::DecodeFile()
 {
-    ifstream file;
-    file.open(GetInputModel().GetTextFileName());
-    string line;
-
-    for (int index = 0; v_pattern_lines.size() > index; index++) {
-        
-        if (file.is_open()){
-            while (getline(file, line))
-            {
-                m_n_ocurrence_by_line = SearchUsingBoyerMoore(v_pattern_lines[index], line);
-                if(m_n_ocurrence_by_line != 0){
-                    m_out_lines.push_back(line);
-                    m_n_ocurrence_by_line ++;
-                }
-            }
-        }else{
-            Error::ShowException("Arquivo corrompido ou inexistente.");
+    
+    char compression_type = ManipulationFile::GetCompressionType(m_file_name);
+    GenericCompression* generic_compression = NULL;
+    
+    switch (compression_type)
+    {
+        case InputModel::LZ77:
+        {
+            break;
         }
-        
+        default:
+            generic_compression = new LZ78Algorithm();
+            break;
     }
     
-    file.close();
+    generic_compression->Decode(m_file_name);
+
 }
+
+void Search::SearchPatternInIndex()
+{
+//    size_t output_text_size;
+//    
+//    int* indexing = ManipulationFile::ConvertStringFileInInt(m_file_name, output_text_size);
+//    vector<string> v_pattern_lines = Search::GetPattern();
+//
+//    for (int index = 0; v_pattern_lines.size() > index; index++) {
+//        size_t m = v_pattern_lines[index].length();
+//        const char* pattern = v_pattern_lines[index].c_str();
+//        int l = 0, r = (int)output_text_size-1;
+//        while (l <= r)
+//        {
+//            int mid = l + (r - l)/2;
+//            int res = strncmp(pattern, indexing[mid], m);
+//            
+//            if (res == 0)
+//            {
+//                cout << "Pattern found at index " << indexing[mid];
+//                return;
+//            }
+//            if (res < 0) r = mid - 1;
+//            else l = mid + 1;
+//        }
+//    }
+//    
+//    delete indexing;
+//    v_pattern_lines.clear();
+
+}
+
 
 vector<string> Search::GetPattern()
 {
@@ -71,8 +94,3 @@ vector<string> Search::GetPattern()
     
     return v_pattern_lines;
 }
-
-
-
-
-

@@ -1,13 +1,10 @@
-//
-//  Command_h
-//  ipmt-xcode
-//
-//  Created by Thaisa Mirely
-//  Copyright © 2015 tmbs. All rights reserved.
-//
+/*
+  @file: command.hpp
+  @brief: Classe abstrada utilizda com base no padrão Factory Method. Um objeto Command é composto por um método de execução. É a classe base dos obejtos relativos a commandos como IndexingFile e SearchFile.
+*/
 
-#ifndef Command_h
-#define Command_h
+#ifndef command_hpp
+#define command_hpp
 
 #include "input_model.hpp"
 
@@ -35,4 +32,4 @@ private:
     InputModel m_input_model;
     
 };
-#endif /* Command_h */
+#endif /* command_hpp */

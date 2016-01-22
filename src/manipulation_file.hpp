@@ -1,10 +1,7 @@
-//
-//  manipulation_files.hpp
-//  ipmt
-//
-//  Created by Thaisa Mirely.
-//  Copyright © 2015 tmbs. All rights reserved.
-//
+/*
+  @file: manipulation_files.hpp
+  @brief: classe responsável por manipular arquivos de texto e realizar conversão.
+*/
 
 #ifndef manipulation_file_hpp
 #define manipulation_file_hpp
@@ -13,6 +10,9 @@
 #include <string.h>
 #include <vector>
 #include <fstream>
+#include <sstream>
+#include <bitset>
+#include "error.hpp"
 
 using namespace std;
 
@@ -21,18 +21,27 @@ class ManipulationFile
     
 public:
     
-    static bool IsFile(const string& name);
+    static bool IsIndexFile(string name);
     
-    vector<string> static GetFileLines(string file_name);
+    static bool IsFile(string name);
     
-    static void CreateIndexFile(string file_name, vector<string>index_put_lines);
+    static vector<string> GetFileLines(string file_name);
+        
+    static int GetCompressionType(string file_name);
     
-    int GetCompressionType(string line);
+    static void FileWriteBinary(string file_name, const string input);
     
-private:
-    
-    static string GetNameWithoutPrefix(string file_name);
-    
+    static void FileWrite(string file_name, const string input);
 
+    static string FileRead(string file_name);
+
+    static string ConvertStringToASCII(const string& input);
+    
+    static int ConvertBinaryToDecimal(const char& input);
+    
+    static string ConvertDecimalToBinary(const int& input);
+    
+    static int* ConvertStringFileInInt(string file_name, size_t& out_put);
+    
 };
 #endif /* manipulation_file_hpp */

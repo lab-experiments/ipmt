@@ -1,10 +1,7 @@
-//
-//  command_model.cpp
-//  ipmt
-//
-//  Created by Thaisa Mirely.
-//  Copyright © 2015 tmbs. All rights reserved.
-//
+/*
+  @file: command_model.cpp
+  @brief: Implementação dos métodos de acesso da classe InputMode.
+*/
 
 #include "input_model.hpp"
 
@@ -25,7 +22,7 @@ bool InputModel::HasNumberTotalPattern()
     return m_has_number_total_pattern;
 }
 
-int InputModel::GetCompressionPattern()
+int InputModel::GetCompressionType()
 {
     return m_compression_type;
 }
@@ -40,7 +37,7 @@ int InputModel::GetIndexType()
     return m_index_type;
 }
 
-void InputModel:: SetPatternFile(string pattern_file)
+void InputModel::SetPatternFile(string pattern_file)
 {
     m_pattern_file = pattern_file;
 }

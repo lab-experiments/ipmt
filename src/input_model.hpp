@@ -1,10 +1,8 @@
-//
-//  command_model.hpp
-//  ipmt
-//
-//  Created by Thaisa Mirely.
-//  Copyright © 2015 tmbs. All rights reserved.
-//
+/*
+ @file: command_model.hpp
+ @brief: Classe de modelo responsável por conter todos os atributos(e métodos de acesso
+ desse atributo) de uma comando.
+*/
 
 #ifndef command_model_hpp
 #define command_model_hpp
@@ -30,14 +28,14 @@ public:
     string GetPatternFile();
     string GetTextFileName();
     bool HasNumberTotalPattern();
-    int GetCompressionPattern();
+    int GetCompressionType();
     int GetIndexType();
     int GetCommandType();
     
     enum CompressionType
     {
-        LZ77,
-        LZ78
+        LZ78,
+        LZ77
     };
     
     enum IndexType

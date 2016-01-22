@@ -1,15 +1,17 @@
-//
-//  input_control.hpp
-//  ipmt
-//
-//  Created by Thaisa Mirely.
-//  Copyright © 2015 tmbs. All rights reserved.
-//
+/*
+  @file: input_control.hpp
+  @brief: classe responsável por criar um parser do comando. Obtem cada argumento da linha de comando e retorna um objeto do tipo InputModel.
+*/
 
 #ifndef input_control_hpp
 #define input_control_hpp
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <getopt.h>
+#include <string.h>
+#include "error.hpp"
+#include "manipulation_file.hpp"
 #include "input_model.hpp"
 
 #define VERSION_CODE "1.0"
@@ -19,7 +21,6 @@ class InputParser
     
 private:
     
-    int m_index;
     int m_argc;
     char** m_args;
     
