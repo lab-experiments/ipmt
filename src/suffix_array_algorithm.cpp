@@ -18,8 +18,9 @@ void SuffixArrayAlgorithm::ConvertTextInIndex(string file_name,
     BuildSuffixArray(input_text, text_length);
     
     if (!output_text.empty()) {
-        ManipulationFile::FileWrite(output_file_name output_text.c_str());
+        ManipulationFile::FileWrite(output_file_name, output_text.c_str());
         cout << "--- Arquivo de index gerado com sucesso ---" << "\n";
+        
     }else{
         Error::ShowException("Problemas ao realizar a indexação do arquivo.");
     }

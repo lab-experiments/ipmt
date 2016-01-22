@@ -49,7 +49,7 @@ void Indexing::IndexingExecute()
             break;
     }
     
-    generic_indexing->ConvertTextInIndex(m_file_name, m_output_file_name.c_str());
+    generic_indexing->ConvertTextInIndex(m_file_name, m_output_file_name);
 
 }
 
@@ -75,6 +75,6 @@ void Indexing::CompressionExecute()
             break;
     }
     
-   generic_compression->Encode(m_file_name);
+   generic_compression->Encode(m_output_file_name);
 
 }

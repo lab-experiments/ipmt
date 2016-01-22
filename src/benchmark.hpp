@@ -19,10 +19,10 @@ static size_t GetBuffer(const char* file_name){
     return size_t(size);
 }
 
-static void runSuffixArray(){
+static void RunSuffixArray(){
     std::ofstream metrics_file("./metrics_file.txt", std::ofstream::binary | std::ofstream::app);
     
-    /////////////////////// Index - MEASURING EXECUTION TIME ////////////////////////////////////////////////////////////////
+    /////////////////////// Index - MEASURING EXECUTION TIME //////////////////////////////////////////////
     size_t index_begin_buffer =  GetBuffer("file.txt");
     
     auto index_begin_time = std::chrono::system_clock::now();
@@ -31,53 +31,54 @@ static void runSuffixArray(){
     generic_indexing->ConvertTextInIndex("file.txt", "index.idx");
     
     auto index_end_time = std::chrono::system_clock::now();
-    auto index_duration = std::chrono::duration_cast<std::chrono::milliseconds>( index_end_time - index_begin_time ).count();
+    auto index_duration = std::chrono::duration_cast<std::chrono::milliseconds>( index_end_time -
+                                                                                index_begin_time ).count();
     
-    size_t index_end_buffer =  GetBuffer("index.txt");
+    size_t index_end_buffer =  GetBuffer("index.idx");
     
     metrics_file << "\n" << "---- Indexing Execution ----" << "\n";
     metrics_file <<  "Time : " << index_duration << "\n";
     metrics_file << "Buffer arquivo de entrada : " << index_begin_buffer << "\n";
     metrics_file << "Buffer arquivo de saida : " << index_end_buffer << "\n";
     
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     metrics_file.close();
 
 }
 
-static void runEncodeLZ78(){
+static void RunEncodeLZ78(){
     
     std::ofstream metrics_file("./metrics_file.txt", std::ofstream::binary | std::ofstream::app);
 
-       /////////////////////// Encode - MEASURING EXECUTION TIME ////////////////////////////////////////////////////////
-    size_t compress_begin_buffer =  GetBuffer("index.txt");
+       /////////////////////// Encode - MEASURING EXECUTION TIME //////////////////////////////////////
+    size_t compress_begin_buffer =  GetBuffer("index.idx");
 
     auto compress_begin_time = std::chrono::system_clock::now();
 
     LZ78Algorithm* generic_compression =  new LZ78Algorithm();
-    generic_compression->Encode("index.txt");
+    generic_compression->Encode("index.idx");
 
     auto compress_end_time = std::chrono::system_clock::now();
     auto compress_duration = std::chrono::duration_cast<std::chrono::milliseconds>( compress_end_time - compress_begin_time ).count();
     
-    size_t compress_end_buffer =  GetBuffer("encode.txt");
+    size_t compress_end_buffer =  GetBuffer("encode.txt);
 
     metrics_file << "\n" << "---- Encoding Execution ----" << "\n";
     metrics_file << "Time : " << compress_duration << "\n";
     metrics_file << "Buffer arquivo de entrada : " << compress_begin_buffer << "\n";
     metrics_file << "Buffer arquivo de saida : " << compress_end_buffer << "\n";
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
 
     metrics_file.close();
 
 }
 
-static void runDecodeLZ78(){
+static void RunDecodeLZ78(){
     
     std::ofstream metrics_file("./metrics_file.txt", std::ofstream::binary | std::ofstream::app);
 
-    /////////////////////// Decode - MEASURING EXECUTION TIME ////////////////////////////////////////////////////////
+    /////////////////////// Decode - MEASURING EXECUTION TIME /////////////////////////////////////////
     size_t encode_begin_buffer =  GetBuffer("encode.txt");
     
     auto encode_begin_time = std::chrono::system_clock::now();
@@ -94,7 +95,7 @@ static void runDecodeLZ78(){
     metrics_file << " Time : " << encode_duration << "\n";
     metrics_file << " Buffer arquivo de entrada : " << encode_begin_buffer << "\n";
     metrics_file << " Buffer arquivo de saida : " << encode_end_buffer << "\n";
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     
     metrics_file.close();
 

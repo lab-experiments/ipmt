@@ -126,12 +126,12 @@ void InputParser::GetExtraArguments()
             if (extra_arguments_size > 2) {
                 input_model.SetPatternFile(v_result_args[1]);
                 
-                if(!ManipulationFile::IsIndexFile(v_result_args[2]))
-                {
-                    Error::ShowException("Extensão do arquivo não é do tipo idx. Informar arquivo de index com essa extensão.");
-                }else{
+//               if(!ManipulationFile::IsIndexFile(v_result_args[2]))
+//                 {
+//                   Error::ShowException("Extensão do arquivo não é do tipo idx. Informar arquivo de index com essa extensão.");
+//                }else{
                     input_model.SetFileName(v_result_args[2]);
-                }
+//                }
 
             }else{
                 Error::ShowException("Comamdo mal formatado. Siga os exemplos via -h ou -help.");

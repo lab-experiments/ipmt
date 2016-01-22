@@ -9,15 +9,7 @@
 #include "command_factory.hpp"
 #include "input_parser.hpp"
 
-#include "benchmark.hpp"
-
 int main(int argc, const char * argv[]) {
-//    
-//    runSuffixArray();
-//    
-//    runEncodeLZ78();
-//    
-//    runDecodeLZ78();
     
 /*Inputparser cria um objeto do tipo InputModel com os argumentos de comando
      informados e seleciona qual o tipo de comando deverá ser executado.*/
