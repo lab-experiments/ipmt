@@ -22,7 +22,7 @@ Indexing::Indexing(InputModel input_model)
 
 void Indexing::Execute()
 {
-  //  IndexingExecute();
+    IndexingExecute();
     
     CompressionExecute();
 
@@ -66,7 +66,7 @@ void Indexing::CompressionExecute()
     {
         case InputModel::LZ77:
         {
-            //generic_compression = new LZ77Algorithm();
+            //generic_compression = new HullmanAlgorithm();
             break;
         }
         case InputModel::LZ78:
