@@ -9,19 +9,22 @@
 #include "command_factory.hpp"
 #include "input_parser.hpp"
 
-#include "benchmark.hpp" //only for testing
+#include "benchmark.hpp"
 
 int main(int argc, const char * argv[]) {
     
-    /*Inputparser cria um objeto do tipo InputModel com os argumentos de comando
+    runSuffixArray();
+    
+    runEncodeLZ78();
+    
+    runDecodeLZ78();
+    
+/*Inputparser cria um objeto do tipo InputModel com os argumentos de comando
      informados e seleciona qual o tipo de comando deverá ser executado.*/
 //    InputParser input_parser = InputParser(argc, argv);
 //    
 //    Command *command = CommandFactory::GetCommand(input_parser.SetCommand());
 //    command->Execute();
-
-    
-    run(); //only for testing
     
     return 0;
 }
