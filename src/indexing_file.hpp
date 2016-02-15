@@ -14,6 +14,7 @@
 #include "error.hpp"
 #include "suffix_array_algorithm.hpp"
 #include "lz78_algorithm.hpp"
+#include "huffman_algorithm.hpp"
 #include "manipulation_file.hpp"
 #include "command.hpp"
 

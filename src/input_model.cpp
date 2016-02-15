@@ -7,19 +7,19 @@
 
 using namespace std;
 
-string InputModel::GetPatternFile()
+string InputModel::GetPatternFileName()
 {
-    return m_pattern_file;
+    return m_pattern_file_name;
 }
 
 string InputModel::GetTextFileName()
 {
-    return m_file_name;
+    return m_text_file_name;
 }
 
-bool InputModel::HasNumberTotalPattern()
+bool InputModel::ShowNumberPatternOccurrences()
 {
-    return m_has_number_total_pattern;
+    return m_show_number_pattern_occurrences;
 }
 
 int InputModel::GetCompressionType()
@@ -32,34 +32,24 @@ int InputModel::GetCommandType()
     return m_command_type;
 }
 
-int InputModel::GetIndexType()
+void InputModel::SetPatternFileName(string pattern_file)
 {
-    return m_index_type;
+    m_pattern_file_name = pattern_file;
 }
 
-void InputModel::SetPatternFile(string pattern_file)
+void InputModel::SetTextFileName(string file_name)
 {
-    m_pattern_file = pattern_file;
+    m_text_file_name = file_name;
 }
 
-void InputModel::SetFileName(string file_name)
+void InputModel::SetShowNumberPatternOccurrences(bool status)
 {
-    m_file_name = file_name;
-}
-
-void InputModel::SetHasNumberTotalPattern(bool status)
-{
-    m_has_number_total_pattern = status;
+    m_show_number_pattern_occurrences = status;
 }
 
 void InputModel::SetCompressioType(int compression_type)
 {
     m_compression_type = compression_type;
-}
-
-void InputModel::SetIndexType(int index_type)
-{
-    m_index_type = index_type;
 }
 
 void InputModel::SetCommandType(int command_type)

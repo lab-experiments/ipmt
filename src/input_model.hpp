@@ -18,30 +18,21 @@ class InputModel {
     
 public:
     
-    void SetPatternFile(string pattern_file);
-    void SetFileName(string file_name);
-    void SetHasNumberTotalPattern(bool status);
+    void SetPatternFileName(string pattern_file_name);
+    void SetTextFileName(string text_file_name);
+    void SetShowNumberPatternOccurrences(bool status);
     void SetCompressioType(int compression_type);
-    void SetIndexType(int index_type);
     void SetCommandType(int command_type);
     
-    string GetPatternFile();
+    string GetPatternFileName();
     string GetTextFileName();
-    bool HasNumberTotalPattern();
+    bool ShowNumberPatternOccurrences();
     int GetCompressionType();
-    int GetIndexType();
     int GetCommandType();
     
     enum CompressionType
     {
-        LZ78,
-        LZ77
-    };
-    
-    enum IndexType
-    {
-        suffix_array,
-        suffix_tree
+        lz78
     };
     
     enum InputType
@@ -52,11 +43,10 @@ public:
     
 private:
     
-    string m_pattern_file;
-    string m_file_name;
-    bool m_has_number_total_pattern;
+    string m_pattern_file_name;
+    string m_text_file_name;
+    bool m_show_number_pattern_occurrences;
     int m_compression_type;
-    int m_index_type;
     int m_command_type;
 
 };

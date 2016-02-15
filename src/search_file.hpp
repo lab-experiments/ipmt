@@ -13,6 +13,7 @@
 #include "error.hpp"
 #include "manipulation_file.hpp"
 #include "lz78_algorithm.hpp"
+#include "huffman_algorithm.hpp"
 #include "search_result.hpp"
 
 using namespace std;

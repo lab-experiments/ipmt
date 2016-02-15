@@ -30,20 +30,7 @@ void Search::Execute()
 void Search::DecodeFile()
 {
     
-    char compression_type = ManipulationFile::GetCompressionType(m_file_name);
-    GenericCompression* generic_compression = NULL;
-    
-    switch (compression_type)
-    {
-        case InputModel::LZ77:
-        {
-            break;
-        }
-        default:
-            generic_compression = new LZ78Algorithm();
-            break;
-    }
-    
+    GenericCompression* generic_compression = new HuffmanAlgorithm();
     generic_compression->Decode(m_file_name);
 
 }
@@ -83,7 +70,8 @@ void Search::SearchPatternInIndex()
 vector<string> Search::GetPattern()
 {
     vector<std::string> v_pattern_lines;
-    string pattern_name = GetInputModel().GetPatternFile();
+    string pattern_name = GetInputModel().GetPatternFileName();
+    
     if(ManipulationFile::IsFile(pattern_name)){
         v_pattern_lines = ManipulationFile::GetFileLines(pattern_name);
         

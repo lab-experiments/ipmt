@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>ipm-xcode.xcscheme</key>
+		<key>ipmt-xcode.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>247B1B841C529EC40065306B</key>
+		<key>2434B4B91C6BFF510083D680</key>
 		<dict>
 			<key>primary</key>
 			<true/>

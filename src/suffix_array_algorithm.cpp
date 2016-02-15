@@ -9,29 +9,28 @@
 /**
   @brief: Método responsável realizar as sequências de ações para criação de um arquivo de index. Ler o arquivo de texto, executa a compressão com base nesses arquivos e escreve o resultado(indexes) em um arquivo de texto.
  */
-void SuffixArrayAlgorithm::ConvertTextInIndex(string file_name,
-                                              string output_file_name)
+void SuffixArrayAlgorithm::ConvertTextInIndex(string file_name)
 {
     string input_text = ManipulationFile::FileRead(file_name);
-    size_t text_length = input_text.length();
+    size_t _length = input_text.length();
     
-    BuildSuffixArray(input_text, text_length);
+   // ManipulationFile::CreateBinaryFile(output_file_name, _length,
+    BuildSuffixArray(input_text, _length);
+
+   // ManipulationFile::FileWrite(file_name, output_text.c_str());
+    ManipulationFile::CreateIndexFile(file_name, output_text.c_str());
     
-    if (!output_text.empty()) {
-        ManipulationFile::FileWrite(output_file_name, output_text.c_str());
-        cout << "--- Arquivo de index gerado com sucesso ---" << "\n";
-        
-    }else{
-        Error::ShowException("Problemas ao realizar a indexação do arquivo.");
-    }
     output_text.clear();
 
+    /* @brief: "limpar" atributos com auto valor em memória */
+    delete [] index_out_put;
+    _length = 0;
 }
 
 /**
  * @brief: métodos para construção do arquivo de index utilizando array de sufixo.(Uma construção O(nLogn)). Para criação do sufixo foi utilizado todo o texto como entrada armazenado em memória  como uma string.
  */
-void SuffixArrayAlgorithm::BuildSuffixArray(string &input_text, size_t text_length)
+int* SuffixArrayAlgorithm::BuildSuffixArray(string &input_text, size_t text_length)
 {
     /*
       @brief: inicializa o ponteiro de Suffix com o tamanho total do texto de entrada.
@@ -104,14 +103,18 @@ void SuffixArrayAlgorithm::BuildSuffixArray(string &input_text, size_t text_leng
       @brief: converte os arquivos de index para uma string a ser escrita em no arquivo
        idx.
      */
+    index_out_put = new int[text_length];
     for (size_t i = 0; i < text_length; i++){
         output_text.append(to_string(suffix[i].index)+" ");
+        index_out_put[i] = suffix[i].index;
     }
     
     /* @brief: "limpar" atributos com auto valor em memória */
     input_text.clear();
     text_length = 0;
     delete [] suffix;
+    
+    return index_out_put;
 }
 
 /**

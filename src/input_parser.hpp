@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <getopt.h>
 #include <string.h>
+#include <iostream>
 #include "error.hpp"
 #include "manipulation_file.hpp"
 #include "input_model.hpp"

@@ -90,7 +90,7 @@ void LZ78Algorithm::Decode(string file_name)
     dictionary.clear();
     
 
-    ManipulationFile::FileWrite("decode.txt", output_text);
+   // ManipulationFile::FileWrite("decode.txt", output_text);
     cout << "--- Arquivo de index descompactado com sucesso ---" << "\n";
 
     output_text.clear();

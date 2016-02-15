@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:ipm-xcode.xcodeproj">
+      location = "self:ipmt-xcode.xcodeproj">
    </FileRef>
 </Workspace>
