@@ -17,53 +17,57 @@ Search::Search(InputModel input_model)
 void Search::Execute()
 {
 
-    DecodeFile();
+  //  DecodeFile();
+    SearchPatternInIndex();
     
-//    SearchPatternInIndex();
-//    
-//    SearchResult  search_result = SearchResult(m_number_ocurrence, m_out_lines, GetInputModel().HasNumberTotalPattern());
+//    SearchResult  search_result = SearchResult(m_number_ocurrence, m_out_lines, GetInputModel().ShowNumberPatternOccurrences());
 //    search_result.SearchResultOut();
-    
-
+//    
+//
 }
 
 void Search::DecodeFile()
 {
-    
     GenericCompression* generic_compression = new HuffmanAlgorithm();
     generic_compression->Decode(m_file_name);
-
 }
 
 void Search::SearchPatternInIndex()
 {
-//    size_t output_text_size;
-//    
-//    int* indexing = ManipulationFile::ConvertStringFileInInt(m_file_name, output_text_size);
-//    vector<string> v_pattern_lines = Search::GetPattern();
-//
-//    for (int index = 0; v_pattern_lines.size() > index; index++) {
-//        size_t m = v_pattern_lines[index].length();
-//        const char* pattern = v_pattern_lines[index].c_str();
-//        int l = 0, r = (int)output_text_size-1;
-//        while (l <= r)
-//        {
-//            int mid = l + (r - l)/2;
-//            int res = strncmp(pattern, indexing[mid], m);
-//            
-//            if (res == 0)
-//            {
-//                cout << "Pattern found at index " << indexing[mid];
-//                return;
-//            }
-//            if (res < 0) r = mid - 1;
-//            else l = mid + 1;
-//        }
-//    }
-//    
-//    delete indexing;
-//    v_pattern_lines.clear();
+    ManipulationFile::IndexFileProperty ifp = ManipulationFile::ReadIndexFile(m_file_name);
+    
+    vector<string> v_pattern_lines = Search::GetPattern();
+    
+    for (int i = 0; i < v_pattern_lines.size(); i++)
+    {
+        for(int j = 0; j < ifp.v_text.size(); j++)
+        {
+            BinarySearch(v_pattern_lines[i].c_str(),  ifp.v_text[j].c_str(), ifp.p_index, ifp.v_text[j].length());
+        }
+    }
+}
 
+void Search::BinarySearch(const char* pattern, const char* text, int* index, size_t text_size)
+{
+    size_t pattern_lenght = strlen(pattern);
+    size_t lenght_ = 0;
+    size_t r = text_size-1;
+    while (lenght_ <= r)
+    {
+        size_t mid = lenght_ + (r - lenght_)/2;
+        int return_ = strncmp(pattern, text + index[mid], pattern_lenght);
+        
+        if (return_ == 0){
+            cout << "Pattern found at index " << index[mid]<< "\n";
+        }
+        
+        if (return_ < 0){
+            r = mid - 1;
+            
+        }else{
+            lenght_ = mid + 1;
+        }
+    }
 }
 
 

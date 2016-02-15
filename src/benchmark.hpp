@@ -68,7 +68,7 @@ static void RunHuffmanEncode()
     
     metrics_file << "\n" << "---- Encoding Execution ----" << "\n";
     metrics_file << " Time : " << encode_duration << "\n";
-    metrics_file << " Buffer arquivo de entrada : " << encode_begin_buffer << "\n";
+    metrics_file << "* Buffer arquivo de entrada : " << encode_begin_buffer << "\n";
     metrics_file << " Buffer arquivo de saida : " << encode_end_buffer << "\n";
     /////////////////////////////////////////////////////////////
     
@@ -103,5 +103,32 @@ static void RunHuffmanDecode()
     
 };
 
+//static void RunBinarySeach()
+//{
+//    std::ofstream metrics_file("./metrics_file.txt", std::ofstream::binary | std::ofstream::app);
+//    
+//    ///////// Decode - MEASURING EXECUTION TIME //////////////
+//    size_t encode_begin_buffer =  GetBuffer("file.idx");
+//    
+//    auto encode_begin_time = std::chrono::system_clock::now();
+//    
+//    InputModel input_model = new InputModel();
+//    Search binary_search = new Search();
+//    generic_decompres("file.idx");
+//    
+//    auto encode_end_time = std::chrono::system_clock::now();
+//    auto encode_duration = std::chrono::duration_cast<std::chrono::milliseconds>( encode_end_time - encode_begin_time ).count();
+//    
+//    size_t encode_end_buffer =  GetBuffer("file.idx");
+//    
+//    metrics_file << "\n" << "---- Search Execution ----" << "\n";
+//    metrics_file << " Time : " << encode_duration << "\n";
+//    metrics_file << " Buffer arquivo de entrada : " << encode_begin_buffer << "\n";
+//    metrics_file << " Buffer arquivo de saida : " << encode_end_buffer << "\n";
+//    /////////////////////////////////////////////////////////////
+//    
+//    metrics_file.close();
+//    
+//};
 
 #endif /* benchmark_hpp */

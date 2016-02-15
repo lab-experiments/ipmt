@@ -11,19 +11,33 @@
  */
 void SuffixArrayAlgorithm::ConvertTextInIndex(string file_name)
 {
-    string input_text = ManipulationFile::FileRead(file_name);
-    size_t _length = input_text.length();
     
-   // ManipulationFile::CreateBinaryFile(output_file_name, _length,
+// versao leitura completa do arquivo de texto
+    string input_text = ManipulationFile::FileRead(file_name);
+    input_text.erase(input_text.size() - 1);
+
+    size_t _length = strlen(input_text.c_str());
+    
     BuildSuffixArray(input_text, _length);
 
-   // ManipulationFile::FileWrite(file_name, output_text.c_str());
-    ManipulationFile::CreateIndexFile(file_name, output_text.c_str());
     
-    output_text.clear();
+//   versao leitura linha por linha
+    
+//    vector<string> input_text = ManipulationFile::GetFileLines(file_name);
+//    size_t _length = 0;
+//    for (int i = 0; i < input_text.size(); i++)
+//    {
+//        size_t text_length = input_text[i].length();
+//        _length = _length + text_length;
+//        BuildSuffixArray(input_text[i], text_length);
+//    }
+    
+    ManipulationFile::CreateIndexFile(file_name, output_text.c_str(), _length);
+    
 
     /* @brief: "limpar" atributos com auto valor em memória */
     delete [] index_out_put;
+    output_text.clear();
     _length = 0;
 }
 
@@ -140,5 +154,6 @@ int SuffixArrayAlgorithm::ComparationSuffixPair(struct Suffix suffix_one, struct
     
     return position_temp;
 }
+
 
 

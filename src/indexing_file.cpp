@@ -22,7 +22,7 @@ void Indexing::Execute()
 {
     IndexingExecute();
     
-    CompressionExecute();
+   // CompressionExecute();
 
 }
 

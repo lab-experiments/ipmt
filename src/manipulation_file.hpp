@@ -25,7 +25,7 @@ public:
     struct IndexFileProperty
     {
         vector<string> v_text;
-        vector<int> v_index;
+        int* p_index;
     };
     
     static bool IsIndexFile(string name);
@@ -42,30 +42,12 @@ public:
 
     static string FileRead(string file_name);
     
-    static int* ConvertStringFileInInt(string file_name, size_t& out_put);
-    
-    static void CreateIndexFile(string file_name, string input);
+    static void CreateIndexFile(string file_name, string input, size_t input_text_lenght);
     
     static IndexFileProperty ReadIndexFile(string input_file_name);
-
     
-    //static int GetCompressionType(string file_name);
-    
-    //static void FileWriteBinary(string file_name, string input);
-
-   // static IndexFileProperty ReadIndexFile(string input_file_name);
-
-    //static string ConvertStringToASCII(const string& input);
-    
-    //static int ConvertBinaryToDecimal(const char& input);
-    
-    //static string ConvertDecimalToBinary(const int& input);
 
 private:
-    
-//    static istream& IgnoreLine(ifstream& in, ifstream::pos_type& pos);
-//    
-//    static string GetLastLine(ifstream& in);
     
     static int GetSizeFile(std::ifstream& file);
 

@@ -35,6 +35,7 @@ private:
     vector<string> GetPattern();
     void DecodeFile();
     void SearchPatternInIndex();
+    void BinarySearch(const char* pattern, const char* text, int* index, size_t text_size);
     
 };
 #endif /* Search_File_hpp */
