@@ -19,16 +19,15 @@ class SearchResult
     
 public:
     
-    SearchResult(long &m_occurrence_per_line, vector<string> &m_out_lines, bool has_total_occurrence);
-    void SearchResultOut();
-    
+    SearchResult( long &occurrence_numbers, vector<string> &m_out_lines );
+    void ShowTextLinesOccurrences();
+
 private :
     
-    long m_occurrence_per_line;
+    long m_occurrence_numbers = 0;
     vector<string> m_out_lines;
-    bool m_has_total_pattern_occurrence;
     
-    void ShowTotalPatternOccurrence();
+    void ShowOccurrenceNumbersPatterns();
 
 };
 #endif /* search_result_hpp */

@@ -10,20 +10,19 @@ Search::Search(InputModel input_model)
 {
     SetInputModel(input_model);
     m_file_name = GetInputModel().GetTextFileName();
-
 }
 
 
 void Search::Execute()
 {
-
   //  DecodeFile();
     SearchPatternInIndex();
     
-//    SearchResult  search_result = SearchResult(m_number_ocurrence, m_out_lines, GetInputModel().ShowNumberPatternOccurrences());
-//    search_result.SearchResultOut();
-//    
-//
+    if (!m_out_lines.empty()) {
+        SearchResult search_result = SearchResult(m_occurrence_numbers, m_out_lines);
+        search_result.ShowTextLinesOccurrences();
+    }
+    
 }
 
 void Search::DecodeFile()
@@ -49,24 +48,31 @@ void Search::SearchPatternInIndex()
 
 void Search::BinarySearch(const char* pattern, const char* text, int* index, size_t text_size)
 {
-    size_t pattern_lenght = strlen(pattern);
-    size_t lenght_ = 0;
-    size_t r = text_size-1;
-    while (lenght_ <= r)
+    long long pattern_lenght = strlen(pattern);
+    long long lenght = 0;
+    long long r = text_size-1;
+    while (lenght <= r)
     {
-        size_t mid = lenght_ + (r - lenght_)/2;
+        long long mid = lenght + (r - lenght)/2;
         int return_ = strncmp(pattern, text + index[mid], pattern_lenght);
         
         if (return_ == 0){
-            cout << "Pattern found at index " << index[mid]<< "\n";
+          //  cout << "Index " << index[mid]<< "\n";
+            if (GetInputModel().ShowNumberPatternOccurrences()) {
+                m_occurrence_numbers++;
+            }
         }
         
         if (return_ < 0){
             r = mid - 1;
             
         }else{
-            lenght_ = mid + 1;
+            lenght = mid + 1;
         }
+    }
+    
+    if (m_occurrence_numbers > 0) {
+        m_out_lines.push_back(text);
     }
 }
 
@@ -86,3 +92,4 @@ vector<string> Search::GetPattern()
     
     return v_pattern_lines;
 }
+

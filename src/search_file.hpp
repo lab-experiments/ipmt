@@ -12,7 +12,6 @@
 #include "command.hpp"
 #include "error.hpp"
 #include "manipulation_file.hpp"
-#include "lz78_algorithm.hpp"
 #include "huffman_algorithm.hpp"
 #include "search_result.hpp"
 
@@ -28,9 +27,9 @@ public:
     
 private:
     
-    //long m_number_ocurrence;
-    string m_file_name;
+    long m_occurrence_numbers = 0;
     vector<string> m_out_lines;
+    string m_file_name;
     
     vector<string> GetPattern();
     void DecodeFile();

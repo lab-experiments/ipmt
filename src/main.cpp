@@ -20,9 +20,6 @@ informados e seleciona qual o tipo de comando deverá ser executado.*/
     Command *command = CommandFactory::GetCommand(input_parser.SetCommand());
     command->Execute();
     
-      //RunSuffixArray();
-   // RunHuffmanEncode();
-   // RunHuffmanDecode();
-    
+    //RunHuffmanEncode();
     return 0;
 }

@@ -21,11 +21,11 @@ bool InputModel::ShowNumberPatternOccurrences()
 {
     return m_show_number_pattern_occurrences;
 }
-
-int InputModel::GetCompressionType()
-{
-    return m_compression_type;
-}
+//
+//int InputModel::GetCompressionType()
+//{
+//    return m_compression_type;
+//}
 
 int InputModel::GetCommandType()
 {
@@ -47,10 +47,10 @@ void InputModel::SetShowNumberPatternOccurrences(bool status)
     m_show_number_pattern_occurrences = status;
 }
 
-void InputModel::SetCompressioType(int compression_type)
-{
-    m_compression_type = compression_type;
-}
+//void InputModel::SetCompressioType(int compression_type)
+//{
+//    m_compression_type = compression_type;
+//}
 
 void InputModel::SetCommandType(int command_type)
 {

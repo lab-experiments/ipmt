@@ -12,7 +12,7 @@
 void SuffixArrayAlgorithm::ConvertTextInIndex(string file_name)
 {
     
-// versao leitura completa do arquivo de texto
+ //versao leitura completa do arquivo de texto
     string input_text = ManipulationFile::FileRead(file_name);
     input_text.erase(input_text.size() - 1);
 

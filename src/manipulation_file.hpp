@@ -45,11 +45,6 @@ public:
     static void CreateIndexFile(string file_name, string input, size_t input_text_lenght);
     
     static IndexFileProperty ReadIndexFile(string input_file_name);
-    
-
-private:
-    
-    static int GetSizeFile(std::ifstream& file);
 
 };
 #endif /* manipulation_file_hpp */

@@ -40,11 +40,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../src/manipulation_file.cpp"
-            timestampString = "477250930.10948"
+            timestampString = "477277237.04093"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253">
+            startingLineNumber = "236"
+            endingLineNumber = "236">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -54,11 +54,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../src/manipulation_file.cpp"
-            timestampString = "477250930.10948"
+            timestampString = "477277237.04093"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272">
+            startingLineNumber = "255"
+            endingLineNumber = "255">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -68,11 +68,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../src/manipulation_file.cpp"
-            timestampString = "477250930.10948"
+            timestampString = "477277237.04093"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "265"
-            endingLineNumber = "265">
+            startingLineNumber = "248"
+            endingLineNumber = "248">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -82,27 +82,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../src/manipulation_file.cpp"
-            timestampString = "477250930.10948"
+            timestampString = "477277237.04093"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../src/manipulation_file.cpp"
-            timestampString = "477231676.422348"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "ManipulationFile::CreateIndexFile(string file_name, string input, size_t input_text_lenght)"
-            landmarkType = "5">
+            startingLineNumber = "266"
+            endingLineNumber = "266">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -112,11 +96,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../src/search_file.cpp"
-            timestampString = "477257448.250898"
+            timestampString = "477280567.068126"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "Search::BinarySearch(const char* pattern, const char* text, int* index, size_t text_size)"
             landmarkType = "5">
          </BreakpointContent>
@@ -127,28 +111,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../src/suffix_array_algorithm.cpp"
-            timestampString = "477266265.266985"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "SuffixArrayAlgorithm::ConvertTextInIndex(string file_name)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "../src/search_file.cpp"
-            timestampString = "477265973.554974"
+            timestampString = "477283065.380301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "Search::BinarySearch(const char* pattern, const char* text, int* index, size_t text_size)"
             landmarkType = "5">
          </BreakpointContent>

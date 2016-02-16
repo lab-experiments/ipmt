@@ -12,7 +12,6 @@ const struct option CommandOptions[] =
     {"help",               no_argument,       0, 'h'},
     {"count",              no_argument,       0, 'n'},
     {"pattern",            required_argument, 0, 'p'},
-    {"compression",        required_argument, 0, 'c'},
     { 0,                   0,                 0,  0 },
 };
 
@@ -33,7 +32,7 @@ InputModel InputParser::SetCommand()
 
 void InputParser::GetOptionsArguments()
 {
-    const char* option_string = "hnp:c:";
+    const char* option_string = "hnp:";
     int n_option = getopt_long(m_argc, m_args, option_string, CommandOptions, NULL);
     
     while(n_option > 0)
@@ -49,31 +48,20 @@ void InputParser::GetOptionsArguments()
                 break ;
                 
             case 'p':
-            {ifstream file;
-                file.open (optarg, ios::in );
-                if (!file.good()) {
-                    cerr << "O arquivo nao pode ser aberto " << optarg << endl;
-                    abort();
-                }else{
-                    input_model.SetPatternFileName(optarg);
-                }
-            }
-                break ;
-                
-            case 'c':
-                if(optarg == "lz78"){
-                    input_model.SetCompressioType(InputModel::lz78);
-                }else{
-                    Error::ShowException("A opção --compression, requer um argumento do tipo lz78.\n Mais informações cheque $impt --help.");
-                    
+                {
+                    ifstream file;
+                    file.open (optarg, ios::in );
+                    if (!file.good()) {
+                        cerr << "O arquivo nao pode ser aberto " << optarg << endl;
+                        abort();
+                    }else{
+                        input_model.SetPatternFileName(optarg);
+                    }
                 }
                 break ;
                 
             case '?':
-                if (optopt == 'c'){
-                    Error::ShowException("A opção --compression requer um argumento do tipo lz78.\n Mais informações cheque $impt --help.");
-                    
-                }else if(optopt == 'p'){
+                if(optopt == 'p'){
                     Error::ShowException("A opção -p ou --pattern requer um argumento do tipo arquivo de texto.\n Mais informações cheque $impt --help.");
                     
                 }else{
@@ -109,12 +97,12 @@ void InputParser::GetExtraArguments()
             if (extra_arguments_size > 2) {
                 input_model.SetPatternFileName(v_result_args[1]);
                 
-                //               if(!ManipulationFile::IsIndexFile(v_result_args[2]))
-                //                 {
-                //                   Error::ShowException("Extensão do arquivo não é do tipo idx. Informar arquivo de index com essa extensão.");
-                //                }else{
-                input_model.SetTextFileName(v_result_args[2]);
-                //                }
+                if(!ManipulationFile::IsIndexFile(v_result_args[2]))
+                {
+                    Error::ShowException("Extensão do arquivo não é do tipo idx. Informar arquivo de index com essa extensão.");
+                }else{
+                    input_model.SetTextFileName(v_result_args[2]);
+                }
                 
             }else{
                 Error::ShowException("Comamdo mal formatado. Siga os exemplos via -h ou -help.");
@@ -146,8 +134,7 @@ void InputParser::ShowHelp()
             -h, --help               :   Exibe texto com opções e exemplos de comando; \n\\n\\n\
             --------- index command structure ---------\n\
             $ ipmt index [options] textfile\n\
-            --------- command <options> ---------\n\
-            --compression            :   Recebe como argumento 'lz78' referindo-se ao algoritmo LZ78. Por padrão utiliza-se o algoritmo Huffman;\n\n\
+            --------- command ---------\n\
             textfile                 : Arquivo em formato com extensão txt contendo o texto para indexação;\n\\n\\n\
             --------- search command structure ---------\n\
             $ ipmt search [options] pattern indexfile\n\

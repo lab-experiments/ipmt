@@ -64,11 +64,11 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "index file.txt"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "search &quot;encefalopatia&quot; file.idx"
-            isEnabled = "YES">
+            argument = "search &quot;the&quot; file.idx"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

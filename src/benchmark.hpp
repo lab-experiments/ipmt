@@ -6,7 +6,6 @@
 #include <time.h>
 #include <chrono>
 #include "suffix_array_algorithm.hpp"
-#include "lz78_algorithm.hpp"
 #include "huffman_algorithm.hpp"
 
 using namespace std;

@@ -108,8 +108,6 @@ void ManipulationFile::CreateIndexFile(string file_name, string input, size_t in
     //open text file e get size
     ifstream text_file(file_name);
     
-   // string text_lenght = to_string(GetSizeFile(text_file));
-    
     //create temp index file
     const char* temp_index_file_name = "temp_index_.txt";
     ofstream file_out_temp_index(temp_index_file_name);
@@ -146,13 +144,11 @@ ManipulationFile::IndexFileProperty ManipulationFile::ReadIndexFile(string input
     
     ManipulationFile::IndexFileProperty ifp;
     // lendo o texto
-  //  cout << "texto : \n";
     long long  tll = file.tellg();
     
     while (tll < position) {
         getline(file, line);
         ifp.v_text.push_back(line);
-      //  cout << line << "\n";
         tll = file.tellg();
     }
     
@@ -161,8 +157,6 @@ ManipulationFile::IndexFileProperty ManipulationFile::ReadIndexFile(string input
     {
         line = line;
     }
-
-    //cout << line;
 
     stringstream ss(line);
     string token;
@@ -179,15 +173,4 @@ ManipulationFile::IndexFileProperty ManipulationFile::ReadIndexFile(string input
 
     return ifp;
 }
-
-int ManipulationFile::GetSizeFile(std::ifstream& file)
-{
-    size_t length = 0;
-    file.seekg(0, ios::end);
-    length = file.tellg();
-    file.seekg(0, ios::beg);
-    int position = static_cast<int>(length);
-    return position;
-}
-
 
