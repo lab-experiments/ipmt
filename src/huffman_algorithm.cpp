@@ -189,13 +189,13 @@ void HuffmanAlgorithm::BuildCodewords( TreeNode *node )
     if( node->left )
     {
         sequence += node->left_code;
-        GenerateCodewords( node->left );
+        BuildCodewords( node->left );
     }
     
     if( node->right )
     {
         sequence += node->right_code;
-        GenerateCodewords( node->right );
+        BuildCodewords( node->right );
     }
     
     if( !node->left && !node->right )
