@@ -15,12 +15,10 @@ void SuffixArrayAlgorithm::ConvertTextInIndex(const char* input_file_name, const
  /*versao leitura completa do arquivo de texto */
     string input_text = ManipulationFile::FileRead(input_file_name);
     input_text.erase(input_text.size() - 1);
-
     size_t _length = strlen(input_text.c_str());
     
     BuildSuffixArray(input_text, _length);
 
-    
 /*   versao leitura linha por linha */
 //    vector<string> input_text = ManipulationFile::GetFileLines(file_name);
 //    size_t _length = 0;

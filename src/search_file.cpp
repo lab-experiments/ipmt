@@ -16,7 +16,7 @@ Search::Search(InputModel input_model)
 void Search::Execute()
 {
     DecodeFile();
-    
+
     SearchPatternInIndex();
     
     if (!m_out_lines.empty()) {
@@ -37,17 +37,25 @@ void Search::DecodeFile()
 void Search::SearchPatternInIndex()
 {
     ManipulationFile::IndexFileProperty ifp = ManipulationFile::ReadIndexFile(m_input_file_name.c_str());
-    index = ifp.p_index;
     
     vector<string> v_pattern_lines = Search::GetPattern();
+    index = ifp.p_index;
     
     for (size_t i = 0; i < v_pattern_lines.size(); i++)
     {
         for(size_t j = 0; j < ifp.v_text.size(); j++)
         {
-            BinarySearch(v_pattern_lines[i].c_str(),  ifp.v_text[j].c_str(), ifp.v_text[j].length());
+            BinarySearch(v_pattern_lines[i].c_str(), ifp.v_text[j].c_str(),  ifp.v_text[j].length());
+            if (m_occurrence_numbers > 0) {
+                m_out_lines.push_back(ifp.v_text[j]);
+            }
         }
     }
+    
+    //limpando campos
+    delete index;
+    ifp.v_text.clear();
+    v_pattern_lines.clear();
 }
 
 void Search::BinarySearch(const char* pattern, const char* text, size_t text_size)
@@ -61,8 +69,8 @@ void Search::BinarySearch(const char* pattern, const char* text, size_t text_siz
         int return_ = strncmp(pattern, text + index[mid], pattern_lenght);
         
         if (return_ == 0){
-          //  cout << "Index " << index[mid]<< "\n";
-                m_occurrence_numbers++;
+           // cout << "Index " << index[mid]<< "\n";
+            m_occurrence_numbers++;
         }
         
         if (return_ < 0){
@@ -71,10 +79,6 @@ void Search::BinarySearch(const char* pattern, const char* text, size_t text_siz
         }else{
             lenght = mid + 1;
         }
-    }
-    
-    if (m_occurrence_numbers > 0) {
-        m_out_lines.push_back(text);
     }
 }
 

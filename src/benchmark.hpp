@@ -118,9 +118,10 @@ static void RunBinarySeach()
     auto search_begin_time = std::chrono::system_clock::now();
     
     InputModel input_model;
-    input_model.SetPatternFileName("encefalopatia");
+    input_model.SetPatternFileName(pattern_file_name);
     input_model.SetShowNumberPatternOccurrences(true);
     input_model.SetTextFileName(input_file_name);
+    
     Search* binary_search = new Search(input_model);
     binary_search->SearchPatternInIndex();
     

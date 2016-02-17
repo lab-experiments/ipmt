@@ -101,6 +101,8 @@ ManipulationFile::IndexFileProperty ManipulationFile::ReadIndexFile(const char* 
     
     while (tll < position) {
         getline(file, line);
+        line.erase(line.size() - 1);
+
         ifp.v_text.push_back(line);
         tll = file.tellg();
     }
