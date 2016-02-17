@@ -5,7 +5,7 @@
 # Compiler options
 
 CC=g++ -std=c++11
-CFLAGS=-c -Wall
+CFLAGS=-c -Wall -Wno-unused-function
 EXECUTABLE_NAME=ipmt
 
 # Folders
