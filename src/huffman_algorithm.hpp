@@ -33,7 +33,7 @@ private:
     
     void BuildHuffmanTree();
 
-    void GenerateCodewords( TreeNode *node );
+    void BuildCodewords( TreeNode *node );
     void DestroyNode( TreeNode *node );
     
 };

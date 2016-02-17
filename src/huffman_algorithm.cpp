@@ -176,14 +176,14 @@ void HuffmanAlgorithm::BuildHuffmanTree()
     
     //constroi os códigos
     TreeNode *root = tops[0];
-    GenerateCodewords( root );
+    BuildCodewords( root );
     
     //destroi os nós criados anteriormente
     DestroyNode( root );
     tops.clear();
 }
 
-void HuffmanAlgorithm::GenerateCodewords( TreeNode *node )
+void HuffmanAlgorithm::BuildCodewords( TreeNode *node )
 {
     static string sequence = "";
     if( node->left )
