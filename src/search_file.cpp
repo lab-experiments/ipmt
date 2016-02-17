@@ -41,9 +41,9 @@ void Search::SearchPatternInIndex()
     
     vector<string> v_pattern_lines = Search::GetPattern();
     
-    for (int i = 0; i < v_pattern_lines.size(); i++)
+    for (size_t i = 0; i < v_pattern_lines.size(); i++)
     {
-        for(int j = 0; j < ifp.v_text.size(); j++)
+        for(size_t j = 0; j < ifp.v_text.size(); j++)
         {
             BinarySearch(v_pattern_lines[i].c_str(),  ifp.v_text[j].c_str(), ifp.v_text[j].length());
         }

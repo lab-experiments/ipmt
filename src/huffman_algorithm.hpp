@@ -9,6 +9,7 @@
 
 #include <string>
 #include <vector>
+#include <cstring>
 #include <map>
 #include <cassert>
 #include "generic_compressor.hpp"
