@@ -1,10 +1,8 @@
-//
-//  node.hpp
-//  ipmt-xcode
-//
-//  Created by Thaisa Mirely on 2/13/16.
-//  Copyright © 2016 tmbs. All rights reserved.
-//
+/*
+ @brief: tree_struct.hpp
+ @file: Arquivo responsável por conter as esturturas de árvore utilizadas para criação da árvore de Huffman.
+ 
+ */
 
 #ifndef tree_struct_hpp
 #define tree_struct_hpp

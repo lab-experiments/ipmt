@@ -10,7 +10,7 @@ using namespace std;
 const struct option CommandOptions[] =
 {
     {"help",               no_argument,       0, 'h'},
-    {"count",              no_argument,       0, 'n'},
+    {"count",              no_argument,       0, 'c'},
     {"pattern",            required_argument, 0, 'p'},
     { 0,                   0,                 0,  0 },
 };
@@ -32,10 +32,10 @@ InputModel InputParser::SetCommand()
 
 void InputParser::GetOptionsArguments()
 {
-    const char* option_string = "hnp:";
-    int n_option = getopt_long(m_argc, m_args, option_string, CommandOptions, NULL);
+    const char* option_string = "hcp:";
+    int n_option;
     
-    while(n_option > 0)
+    while ( (n_option = getopt_long(m_argc, m_args, option_string, CommandOptions, NULL)) > 0 )
     {
         switch (n_option)
         {
@@ -43,17 +43,14 @@ void InputParser::GetOptionsArguments()
                 InputParser::ShowHelp() ;
                 break ;
                 
-            case 'n':
+            case 'c':
                 input_model.SetShowNumberPatternOccurrences(true);
                 break ;
                 
             case 'p':
                 {
-                    ifstream file;
-                    file.open (optarg, ios::in );
-                    if (!file.good()) {
-                        cerr << "O arquivo nao pode ser aberto " << optarg << endl;
-                        abort();
+                    if (!ManipulationFile::IsFile(optarg)) {
+                        Error::ShowException( "O arquivo não pode ser aberto. Adicione outro arquivo de padrão ");
                     }else{
                         input_model.SetPatternFileName(optarg);
                     }
@@ -71,7 +68,7 @@ void InputParser::GetOptionsArguments()
                 break ;
                 
             default:
-                abort();
+                exit(-1);
         }
     }
     
@@ -89,39 +86,40 @@ void InputParser::GetExtraArguments()
             v_result_args.push_back(m_args[i]);
         }
         
-        long extra_arguments_size = v_result_args.size();
-        
         if (v_result_args[0] == "search") {
             input_model.SetCommandType(InputModel::search);
+            string input_file_name;
             
-            if (extra_arguments_size > 2) {
+            if(input_model.GetPatternFileName().empty() && v_result_args.size() >= 2)
+            {
                 input_model.SetPatternFileName(v_result_args[1]);
+                input_file_name = v_result_args[2];
+            }else{
+                input_file_name = v_result_args[1];
+
+            }
+            
+            if(!ManipulationFile::IsIndexFile(input_file_name))
+            {
+                Error::ShowException("Extensão do arquivo não é do tipo idx. Informar arquivo de index com essa extensão.");
+            }else{
                 
-                if(!ManipulationFile::IsIndexFile(v_result_args[2]))
-                {
-                    Error::ShowException("Extensão do arquivo não é do tipo idx. Informar arquivo de index com essa extensão.");
+                if (!ManipulationFile::IsFile(input_file_name.c_str())) {
+                    Error::ShowException( "Arquivo inválido. Insira um arquivo de texto.");
                 }else{
-                    input_model.SetTextFileName(v_result_args[2]);
+                    input_model.SetTextFileName(input_file_name);
                 }
-                
-            }else{
-                Error::ShowException("Comamdo mal formatado. Siga os exemplos via -h ou -help.");
-                
             }
             
-        } else if (v_result_args[0] == "index"){
+        } else if (v_result_args[0] == "index" && v_result_args.size() > 1){
             input_model.SetCommandType(InputModel::index);
+            input_model.SetTextFileName(v_result_args[1]);
             
-            if (extra_arguments_size > 1){
-                input_model.SetTextFileName(v_result_args[1]);
-                
-            }else{
-                Error::ShowException("Comamdo mal formatado. Siga os exemplos via -h ou -help.");
-                
-            }
+        }else{
+            Error::ShowException("Comamdo mal formatado. Siga os exemplos via -h ou --help.");
         }
     }else{
-        Error::ShowException("Argumentos não especificados. Siga os exemplos via -h ou -help.");
+        Error::ShowException("Argumentos não especificados. Siga os exemplos via -h ou --help.");
         
     }
 }
@@ -144,6 +142,6 @@ void InputParser::ShowHelp()
             patternfile              :   Arquivo de texto contendo um ou mais padrões. Cada padrão é estruturado em uma linha do arquivo;\n\\n\
             indexfile                :   Arquivo indexado para realização de busca;\n\\n\
             pattern                  :   String contendo padrão para busca;", VERSION_CODE);
-    abort() ;
+    exit(-1);
 }
 

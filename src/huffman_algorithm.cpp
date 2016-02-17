@@ -1,25 +1,22 @@
-//
-//  huffman_algorithm.cpp
-//  ipmt-xcode
-//
-//  Created by Thaisa Mirely on 2/13/16.
-//  Copyright © 2016 tmbs. All rights reserved.
-//
+/*
+ @file: huffman_algorithm.cpp
+ @brief: arquivo de implementação dos métodos da classe HuffmanAlgorithm.
+ */
+
 
 #include "huffman_algorithm.hpp"
 
-void HuffmanAlgorithm::Encode( string input_file_name )
+void HuffmanAlgorithm::Encode( const char* input_file_name )
 {
-    map<char, int> frequency; // frequency for each char from input text
+    // armazena cada caracter e a frequência de cada um
+    map<char, int> frequency;
     int i;
     
-    //  Opening input file
-    //
     FILE *inputFile;
-    inputFile = fopen( input_file_name.c_str(), "r" );
-    assert( inputFile );
+    inputFile = fopen( input_file_name, "r" );
+//    assert( inputFile );
     
-    //  Counting chars
+    //conta o número de caracteres
     char character;
     unsigned total_character = 0;
     while( fscanf( inputFile, "%c", &character ) != EOF )
@@ -29,84 +26,81 @@ void HuffmanAlgorithm::Encode( string input_file_name )
     }
     table_size = (int)frequency.size();
     
-    //  Building decreasing frequency table
+    //tabela de frequência de caracteres
     table = new Node[table_size];
 
-    float ftot = float(total_character);
+    float total_char = float(total_character);
     map<char, int>::iterator iterator;
     for( iterator=frequency.begin(),i=0; iterator!=frequency.end(); ++iterator,++i )
     {
         table[i].character = (*iterator).first;
-        table[i].probability = float((*iterator).second) / ftot;
+        table[i].probability = float((*iterator).second) / total_char;
     }
     qsort( table, table_size, sizeof(Node), NodeCompare );
     
-    //  Encoding
+    //  Codificação
     BuildHuffmanTree();
     
-    //  Opening output file
-    string temp_out_put_name ="temp_encoded_"+input_file_name;
+    //cria um arquivo temporário para criação da tabela e códigos
+    const char* temp_out_put_name ="temp_encoded";
     FILE *outputFile;
-    outputFile = fopen( temp_out_put_name.c_str(), "wb" );
+    outputFile = fopen( temp_out_put_name, "wb" );
     assert( outputFile );
     
-    //  Outputing table and m_codewords
+    // escreve no arquivo a tabela e cpodigos
     fprintf( outputFile, "%i""\n", table_size );
     for( i=0; i<table_size; i++ )
     {
         fprintf(outputFile, "%c\t%f\t%s""\n", table[i].character, table[i].probability, m_codeword[table[i].character].c_str() );
     }
     
-    //  Outputing encoded text
     fseek( inputFile, SEEK_SET, 0 );
-
     fprintf(outputFile, "\n");
     while( fscanf( inputFile, "%c", &character ) != EOF )
     {
         fprintf(outputFile, "%s", m_codeword[character].c_str());
     }
     
-    //  Cleaning
+    //limpa memória
     m_codeword.clear();
     delete[] table;
     
-    //  Closing files
     fclose( outputFile );
     fclose( inputFile );
     
-    remove(input_file_name.c_str());
-    rename(temp_out_put_name.c_str(), input_file_name.c_str());
+    remove(input_file_name);
+    rename(temp_out_put_name, input_file_name);
 }
 
-void HuffmanAlgorithm::Decode( string input_file_name)
+void HuffmanAlgorithm::Decode( const char* input_file_name)
 {
-    //  Opening input file
     FILE *inputFile;
-    inputFile = fopen( input_file_name.c_str(), "r" );
-    assert( inputFile );
+    inputFile = fopen( input_file_name, "r" );
+//    assert( inputFile );
 
-    //  Loading m_codewords
+    // carrega os códigos
     fscanf( inputFile, "%i", &table_size );
     char character, code[128];
     float p;
     int i;
-    fgetc( inputFile ); // skip end line
+    fgetc( inputFile );
     for( i=0; i<table_size; i++ )
     {
         character = fgetc(inputFile);
         fscanf( inputFile, "%f %s", &p, code );
         m_codeword[character] = code;
-        fgetc(inputFile); // skip end line
+        fgetc(inputFile);
     }
-    fgetc(inputFile); // skip end line
+    fgetc(inputFile);
     
-    //  Opening output file
-    string temp_out_put_name ="temp_decoded_"+input_file_name;
+    //cria um arquivo temporário para armazenar a descodificação preservando o arquivo
+    //de entrada com a tabela.
+    const char* temp_out_put_name ="temp_decoded_";
     FILE *outputFile;
-    outputFile = fopen( temp_out_put_name.c_str(), "w" );
-    assert( outputFile );
+    outputFile = fopen( temp_out_put_name, "w" );
+//    assert( outputFile );
     
-    //  Decoding and outputing to file
+    //decodifica e adiciona no arquivo de saida
     string accum = "";
     map<char, string>::iterator iterator;
     while((character = fgetc(inputFile)) != EOF)
@@ -120,21 +114,19 @@ void HuffmanAlgorithm::Decode( string input_file_name)
             }
     }
     
-    //  Cleaning
     fclose( outputFile );
     fclose( inputFile );
     
-    remove(input_file_name.c_str());
-    rename(temp_out_put_name.c_str(), input_file_name.c_str());
+    remove(input_file_name);
+    rename(temp_out_put_name, input_file_name);
 
 }
 
 void HuffmanAlgorithm::BuildHuffmanTree()
 {
-    //  Creating leaves (initial top-nodes)
-    //
+    //cria as folhas da árvore
     TreeNode *node;
-    vector<TreeNode*> tops; // top-nodes
+    vector<TreeNode*> tops;
     int total_caracter=table_size;
     for( int i=0; i<total_caracter; i++ )
     {
@@ -145,11 +137,8 @@ void HuffmanAlgorithm::BuildHuffmanTree()
         node->right = NULL;
         tops.push_back( node );
     }
-    
-    //  Building binary tree.
-    //  Combining last two nodes, replacing them by new node
-    //  without invalidating sort
-    //
+
+    // constroi a arvore binária combinando últimos dois nós, substituindo-os por novo nó
     while( total_caracter > 1 )
     {
         node = new TreeNode;
@@ -178,32 +167,35 @@ void HuffmanAlgorithm::BuildHuffmanTree()
                 break;
             }
         }
-        if( !isins ) tops.push_back( node );
+        if( !isins )
+        {
+            tops.push_back( node );
+        }
         total_caracter--;
     }
     
-    //  Building m_codewords
+    //constroi os códigos
     TreeNode *root = tops[0];
-    GenerateCode( root );
+    GenerateCodewords( root );
     
-    //  Cleaning
+    //destroi os nós criados anteriormente
     DestroyNode( root );
     tops.clear();
 }
 
-void HuffmanAlgorithm::GenerateCode( TreeNode *node )
+void HuffmanAlgorithm::GenerateCodewords( TreeNode *node )
 {
     static string sequence = "";
     if( node->left )
     {
         sequence += node->left_code;
-        GenerateCode( node->left );
+        GenerateCodewords( node->left );
     }
     
     if( node->right )
     {
         sequence += node->right_code;
-        GenerateCode( node->right );
+        GenerateCodewords( node->right );
     }
     
     if( !node->left && !node->right )

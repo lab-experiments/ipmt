@@ -24,17 +24,18 @@ public:
     
     Search(InputModel input_model);
     void Execute();
-    
+    void SearchPatternInIndex();
+
 private:
     
     long m_occurrence_numbers = 0;
     vector<string> m_out_lines;
-    string m_file_name;
+    string m_input_file_name;
+    int* index;
     
     vector<string> GetPattern();
     void DecodeFile();
-    void SearchPatternInIndex();
-    void BinarySearch(const char* pattern, const char* text, int* index, size_t text_size);
+    void BinarySearch(const char* pattern, const char* text, size_t text_size);
     
 };
 #endif /* Search_File_hpp */

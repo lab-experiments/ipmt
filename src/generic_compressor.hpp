@@ -13,9 +13,9 @@ class GenericCompression
     
 public:
     
-    virtual void Encode(std::string file_name) = 0;
+    virtual void Encode(const char* input_file_name) = 0;
     
-    virtual void Decode(std::string file_name) = 0;
+    virtual void Decode(const char* input_file_name) = 0;
 
 };
 #endif /* generic_compressor_hpp */

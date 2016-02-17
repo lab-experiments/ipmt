@@ -9,11 +9,11 @@
 /**
   @brief: Método responsável realizar as sequências de ações para criação de um arquivo de index. Ler o arquivo de texto, executa a compressão com base nesses arquivos e escreve o resultado(indexes) em um arquivo de texto.
  */
-void SuffixArrayAlgorithm::ConvertTextInIndex(string file_name)
+void SuffixArrayAlgorithm::ConvertTextInIndex(const char* input_file_name, const char* output_file_name)
 {
     
- //versao leitura completa do arquivo de texto
-    string input_text = ManipulationFile::FileRead(file_name);
+ /*versao leitura completa do arquivo de texto */
+    string input_text = ManipulationFile::FileRead(input_file_name);
     input_text.erase(input_text.size() - 1);
 
     size_t _length = strlen(input_text.c_str());
@@ -21,8 +21,7 @@ void SuffixArrayAlgorithm::ConvertTextInIndex(string file_name)
     BuildSuffixArray(input_text, _length);
 
     
-//   versao leitura linha por linha
-    
+/*   versao leitura linha por linha */
 //    vector<string> input_text = ManipulationFile::GetFileLines(file_name);
 //    size_t _length = 0;
 //    for (int i = 0; i < input_text.size(); i++)
@@ -32,19 +31,18 @@ void SuffixArrayAlgorithm::ConvertTextInIndex(string file_name)
 //        BuildSuffixArray(input_text[i], text_length);
 //    }
     
-    ManipulationFile::CreateIndexFile(file_name, output_text.c_str(), _length);
+    ManipulationFile::CreateIndexFile(input_file_name, output_file_name, output_index.c_str(), _length);
     
 
     /* @brief: "limpar" atributos com auto valor em memória */
-    delete [] index_out_put;
-    output_text.clear();
+    output_index.clear();
     _length = 0;
 }
 
 /**
  * @brief: métodos para construção do arquivo de index utilizando array de sufixo.(Uma construção O(nLogn)). Para criação do sufixo foi utilizado todo o texto como entrada armazenado em memória  como uma string.
  */
-int* SuffixArrayAlgorithm::BuildSuffixArray(string &input_text, size_t text_length)
+void SuffixArrayAlgorithm::BuildSuffixArray(string &input_text, size_t text_length)
 {
     /*
       @brief: inicializa o ponteiro de Suffix com o tamanho total do texto de entrada.
@@ -117,18 +115,14 @@ int* SuffixArrayAlgorithm::BuildSuffixArray(string &input_text, size_t text_leng
       @brief: converte os arquivos de index para uma string a ser escrita em no arquivo
        idx.
      */
-    index_out_put = new int[text_length];
     for (size_t i = 0; i < text_length; i++){
-        output_text.append(to_string(suffix[i].index)+" ");
-        index_out_put[i] = suffix[i].index;
+        output_index.append(to_string(suffix[i].index)+" ");
     }
     
     /* @brief: "limpar" atributos com auto valor em memória */
     input_text.clear();
     text_length = 0;
     delete [] suffix;
-    
-    return index_out_put;
 }
 
 /**

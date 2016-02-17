@@ -13,7 +13,7 @@ class GenericIndexing
 
 public:
 
-    virtual void ConvertTextInIndex(std::string input_file_name)=0;
+    virtual void ConvertTextInIndex(const char* input_file_name, const char* output_file_name)=0;
 
 };
 #endif /* generic_indexing_hpp */

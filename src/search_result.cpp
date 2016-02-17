@@ -6,35 +6,25 @@
 
 #include "search_result.hpp"
 
-SearchResult::SearchResult(long &occurrence_numbers, vector<string> &out_lines)
-{
-    m_occurrence_numbers = occurrence_numbers;
-    m_out_lines = out_lines;
-}
-
 /*
   @brief: método que exibi no console as linhas onde ocorreu casamento de padrão
  */
-void SearchResult::ShowTextLinesOccurrences()
+void SearchResult::ShowTextLinesOccurrences(vector<string> &out_lines)
 {
-    for (unsigned int i = 0; i < (unsigned)m_out_lines.size(); i++)
+    for (unsigned int i = 0; i < (unsigned)out_lines.size(); i++)
     {
-        printf("%s \n", m_out_lines[i].c_str());
+        printf("%s \n", out_lines[i].c_str());
     }
     printf("----------------------------------------------\n");
     
-    m_out_lines.clear();
+    out_lines.clear();
     
-    if(m_occurrence_numbers > 0)
-    {
-        ShowOccurrenceNumbersPatterns();
-    }
 }
 
 
-void SearchResult::ShowOccurrenceNumbersPatterns()
+void SearchResult::ShowOccurrenceNumbersPatterns(long &occurrence_numbers)
 {
-    printf("Número total de ocorrências : %lu\n",m_occurrence_numbers);
+    printf("Número total de ocorrências : %lu\n",occurrence_numbers);
 }
 
 

@@ -6,16 +6,16 @@
 #include "manipulation_file.hpp"
 
 
-bool ManipulationFile::IsFile(string name)
+bool ManipulationFile::IsFile(const char* name)
 {
     struct stat buffer;
-    return (stat (name.c_str(), &buffer) == 0);
+    return (stat (name, &buffer) == 0);
 }
 
 /*
   @brief: método retorna um vetor onde cada index representa uma linha do arquivo.
  */
-vector<string> ManipulationFile::GetFileLines(string file_name)
+vector<string> ManipulationFile::GetFileLines(const char* file_name)
 {    
     ifstream file;
     file.open(file_name);
@@ -38,9 +38,9 @@ vector<string> ManipulationFile::GetFileLines(string file_name)
 /*
   @brief: função retorna o arquivo informado via parâmetro, como uma string.
  */
-string ManipulationFile::FileRead(string file_name)
+string ManipulationFile::FileRead(const char* input_file_name)
 {
-    ifstream file(file_name);
+    ifstream file(input_file_name);
     stringstream buffer;
     buffer << file.rdbuf();
     
@@ -52,61 +52,16 @@ string ManipulationFile::FileRead(string file_name)
     return input;
 }
 
-/*
-  @brief: cria um arquivo com o dados do parâmetro @input
- */
-void ManipulationFile::FileWrite(string file_name, const string input)
-{
-    ofstream file_out(file_name);
-    file_out.clear();
-    file_out << input;
-    if (input.empty()) {
-        Error::ShowException("Problemas ao gerar criar o arquivo.");
-    }
-    file_out.close();
-}
-
-
 bool ManipulationFile::IsIndexFile(string file_name)
 {
     return (file_name.substr(file_name.find_last_of(".") + 1) == "idx") ? true : false;
 }
 
-/*
- @brief: created binary file with idx extension
- Index file.
- */
-void ManipulationFile::CreateBinaryFile(string file_name, size_t size, int* array_suffix)
-{
-    ofstream file(file_name, ios::binary | ios::ate);
-    file.write(reinterpret_cast<const char*> (array_suffix), sizeof(int) * size);
-    file.close();
-    
-    for (int i = 0; i < size; ++i)
-        cout<<array_suffix[i]<<"\n";
 
-}
-
-
-int* ManipulationFile::ReadBinaryIndexFile(string file_name)
-{
-   ifstream file(file_name, ios::binary);
-   size_t size = 0;
-   file.seekg(0, ios::end); // set the pointer to the end
-   size = file.tellg() ; // get the length of the file
-   file.seekg(0, ios::beg); // set the pointer to the beginning
-   
-   int * index_pointer = new int[size];
-   file.read(reinterpret_cast<char *>(index_pointer), sizeof(int) * size);
-   file.close();
-    
-   return index_pointer;
-}
-
-void ManipulationFile::CreateIndexFile(string file_name, string input, size_t input_text_lenght)
+void ManipulationFile::CreateIndexFile(const char* input_file_name, const char* output_file_name,  string input, size_t input_text_lenght)
 {
     //open text file e get size
-    ifstream text_file(file_name);
+    ifstream text_file(input_file_name);
     
     //create temp index file
     const char* temp_index_file_name = "temp_index_.txt";
@@ -118,9 +73,7 @@ void ManipulationFile::CreateIndexFile(string file_name, string input, size_t in
     ifstream file_out_index(temp_index_file_name);
 
     //create index file
-    size_t lastindex = file_name.find_last_of(".");
-    string m_output_file_name = "./" + file_name.substr(0, lastindex)+".idx";
-    ofstream combined_file( m_output_file_name ) ;
+    ofstream combined_file( output_file_name ) ;
     combined_file << to_string(input_text_lenght) << "\n" << text_file.rdbuf()  << "\n" << file_out_index.rdbuf();
     
     //close all files
@@ -129,13 +82,13 @@ void ManipulationFile::CreateIndexFile(string file_name, string input, size_t in
     combined_file.close();
     
     //remove temporary files
-    remove(file_name.c_str());
+    remove(input_file_name);
     remove(temp_index_file_name);
     
 }
 
 
-ManipulationFile::IndexFileProperty ManipulationFile::ReadIndexFile(string input_file_name)
+ManipulationFile::IndexFileProperty ManipulationFile::ReadIndexFile(const char* input_file_name)
 {
     ifstream file(input_file_name);
     string line;
@@ -174,3 +127,33 @@ ManipulationFile::IndexFileProperty ManipulationFile::ReadIndexFile(string input
     return ifp;
 }
 
+///*
+// @brief: created binary file with idx extension
+// Index file.
+// */
+//void ManipulationFile::CreateBinaryFile(string file_name, size_t size, int* array_suffix)
+//{
+//    ofstream file(file_name, ios::binary | ios::ate);
+//    file.write(reinterpret_cast<const char*> (array_suffix), sizeof(int) * size);
+//    file.close();
+//    
+//    for (int i = 0; i < size; ++i)
+//        cout<<array_suffix[i]<<"\n";
+//    
+//}
+//
+//
+//int* ManipulationFile::ReadBinaryIndexFile(string file_name)
+//{
+//    ifstream file(file_name, ios::binary);
+//    size_t size = 0;
+//    file.seekg(0, ios::end);
+//    size = file.tellg() ;
+//    file.seekg(0, ios::beg);
+//    
+//    int * index_pointer = new int[size];
+//    file.read(reinterpret_cast<char *>(index_pointer), sizeof(int) * size);
+//    file.close();
+//    
+//    return index_pointer;
+//}

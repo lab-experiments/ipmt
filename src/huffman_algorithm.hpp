@@ -1,10 +1,8 @@
-//
-//  huffman_algorithm.hpp
-//  ipmt-xcode
-//
-//  Created by Thaisa Mirely on 2/13/16.
-//  Copyright © 2016 tmbs. All rights reserved.
-//
+/*
+ @brief: huffman_algorithm.hpp
+ @file: classe responsável por contr os métodos de compressão e descompressão, além dos métodos auxiliares para construção do arlgoritmo;
+ 
+ */
 
 #ifndef huffman_algorithm_hpp
 #define huffman_algorithm_hpp
@@ -13,8 +11,6 @@
 #include <vector>
 #include <map>
 #include <cassert>
-#include <fstream>
-#include <sstream>
 #include "generic_compressor.hpp"
 #include "tree_struct.hpp"
 
@@ -25,8 +21,8 @@ class HuffmanAlgorithm : public GenericCompression
     
 public:
     
-    void Encode(string input_file_name);
-    void Decode(string input_file_name);
+    void Encode(const char* input_file_name);
+    void Decode(const char* input_file_name);
     
 private:
     
@@ -36,7 +32,7 @@ private:
     
     void BuildHuffmanTree();
 
-    void GenerateCode( TreeNode *node );
+    void GenerateCodewords( TreeNode *node );
     void DestroyNode( TreeNode *node );
     
 };

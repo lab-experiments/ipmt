@@ -10,11 +10,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include <iostream>
 #include <cstring>
 #include <vector>
 #include <algorithm>
-#include <iostream>
 #include "generic_indexing.hpp"
 #include "manipulation_file.hpp"
 
@@ -25,13 +23,11 @@ class SuffixArrayAlgorithm : public GenericIndexing
 
 public:
     
-    void ConvertTextInIndex(string file_name);
+    void ConvertTextInIndex(const char* input_file_name, const char* output_file_name);
 
 private:
 
-    int* index_out_put;
-    string output_text;
-
+    string output_index;
     
     /**
      * @brief: Estrutura de um suffixo. Composta por index e posição(um array de inteiros com as posições atual e anterior.)
@@ -42,7 +38,7 @@ private:
         int position[2];
     };
     
-    int* BuildSuffixArray(string &input, size_t _length);
+    void BuildSuffixArray(string &input, size_t _length);
     
     static int ComparationSuffixPair(struct Suffix suffix_one, struct Suffix suffix_two);
 

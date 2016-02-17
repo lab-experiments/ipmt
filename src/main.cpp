@@ -9,7 +9,7 @@
 #include "command_factory.hpp"
 #include "input_parser.hpp"
 
-#include "benchmark.hpp"
+//#include "benchmark.hpp"
 
 int main(int argc, const char * argv[]) {
     
@@ -20,6 +20,5 @@ informados e seleciona qual o tipo de comando deverá ser executado.*/
     Command *command = CommandFactory::GetCommand(input_parser.SetCommand());
     command->Execute();
     
-    //RunHuffmanEncode();
     return 0;
 }

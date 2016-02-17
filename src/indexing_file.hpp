@@ -29,7 +29,7 @@ public:
     
 private:
 
-    string  m_file_name;
+    string  m_input_file_name;
     string  m_output_file_name;
 
     void IndexingExecute();

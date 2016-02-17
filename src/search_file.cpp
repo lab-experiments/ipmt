@@ -9,18 +9,21 @@
 Search::Search(InputModel input_model)
 {
     SetInputModel(input_model);
-    m_file_name = GetInputModel().GetTextFileName();
+    m_input_file_name = GetInputModel().GetTextFileName();
 }
 
 
 void Search::Execute()
 {
-  //  DecodeFile();
+    DecodeFile();
+    
     SearchPatternInIndex();
     
     if (!m_out_lines.empty()) {
-        SearchResult search_result = SearchResult(m_occurrence_numbers, m_out_lines);
-        search_result.ShowTextLinesOccurrences();
+        SearchResult::ShowTextLinesOccurrences(m_out_lines);
+        if (GetInputModel().ShowNumberPatternOccurrences()) {
+           SearchResult::ShowOccurrenceNumbersPatterns(m_occurrence_numbers);
+        }
     }
     
 }
@@ -28,12 +31,13 @@ void Search::Execute()
 void Search::DecodeFile()
 {
     GenericCompression* generic_compression = new HuffmanAlgorithm();
-    generic_compression->Decode(m_file_name);
+    generic_compression->Decode(m_input_file_name.c_str());
 }
 
 void Search::SearchPatternInIndex()
 {
-    ManipulationFile::IndexFileProperty ifp = ManipulationFile::ReadIndexFile(m_file_name);
+    ManipulationFile::IndexFileProperty ifp = ManipulationFile::ReadIndexFile(m_input_file_name.c_str());
+    index = ifp.p_index;
     
     vector<string> v_pattern_lines = Search::GetPattern();
     
@@ -41,12 +45,12 @@ void Search::SearchPatternInIndex()
     {
         for(int j = 0; j < ifp.v_text.size(); j++)
         {
-            BinarySearch(v_pattern_lines[i].c_str(),  ifp.v_text[j].c_str(), ifp.p_index, ifp.v_text[j].length());
+            BinarySearch(v_pattern_lines[i].c_str(),  ifp.v_text[j].c_str(), ifp.v_text[j].length());
         }
     }
 }
 
-void Search::BinarySearch(const char* pattern, const char* text, int* index, size_t text_size)
+void Search::BinarySearch(const char* pattern, const char* text, size_t text_size)
 {
     long long pattern_lenght = strlen(pattern);
     long long lenght = 0;
@@ -58,9 +62,7 @@ void Search::BinarySearch(const char* pattern, const char* text, int* index, siz
         
         if (return_ == 0){
           //  cout << "Index " << index[mid]<< "\n";
-            if (GetInputModel().ShowNumberPatternOccurrences()) {
                 m_occurrence_numbers++;
-            }
         }
         
         if (return_ < 0){
@@ -80,7 +82,7 @@ void Search::BinarySearch(const char* pattern, const char* text, int* index, siz
 vector<string> Search::GetPattern()
 {
     vector<std::string> v_pattern_lines;
-    string pattern_name = GetInputModel().GetPatternFileName();
+    const char* pattern_name = GetInputModel().GetPatternFileName().c_str();
     
     if(ManipulationFile::IsFile(pattern_name)){
         v_pattern_lines = ManipulationFile::GetFileLines(pattern_name);

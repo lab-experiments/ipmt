@@ -14,15 +14,16 @@ Indexing::Indexing(InputModel input_model)
     /**
      * @brief: cria do nome do arquivo de index com base no arquivo de entrada.
      */
-    m_file_name = GetInputModel().GetTextFileName();
-
+    m_input_file_name = GetInputModel().GetTextFileName();
+    size_t lastindex = m_input_file_name.find_last_of(".");
+    m_output_file_name = "./" + m_input_file_name.substr(0, lastindex)+".idx";
 }
 
 void Indexing::Execute()
 {
     IndexingExecute();
     
-   // CompressionExecute();
+    CompressionExecute();
 
 }
 
@@ -33,7 +34,7 @@ void Indexing::Execute()
 void Indexing::IndexingExecute()
 {
     GenericIndexing* generic_indexing = new SuffixArrayAlgorithm();
-    generic_indexing->ConvertTextInIndex(m_file_name);
+    generic_indexing->ConvertTextInIndex(m_input_file_name.c_str(), m_output_file_name.c_str());
 
 }
 
@@ -45,6 +46,6 @@ void Indexing::IndexingExecute()
 void Indexing::CompressionExecute()
 {
     GenericCompression* generic_compression = new HuffmanAlgorithm();;
-    generic_compression->Encode(m_output_file_name);
+    generic_compression->Encode(m_output_file_name.c_str());
 
 }

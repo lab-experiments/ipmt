@@ -30,21 +30,20 @@ public:
     
     static bool IsIndexFile(string name);
     
-    static bool IsFile(string name);
+    static bool IsFile(const char* name);
     
-    static vector<string> GetFileLines(string file_name);
+    static vector<string> GetFileLines(const char* file_name);
     
-    static void CreateBinaryFile(string file_name, size_t size, int* array_suffix);
+    static string FileRead(const char* file_name);
     
-    static int* ReadBinaryIndexFile(string file_name);
+    static void CreateIndexFile(const char* input_file_name, const char* output_file_name, string input, size_t input_text_lenght);
     
-    static void FileWrite(string file_name, const string input);
-
-    static string FileRead(string file_name);
+    static IndexFileProperty ReadIndexFile(const char* input_file_name);
     
-    static void CreateIndexFile(string file_name, string input, size_t input_text_lenght);
-    
-    static IndexFileProperty ReadIndexFile(string input_file_name);
+//
+//    static void CreateBinaryFile(string file_name, size_t size, int* array_suffix);
+//    
+//    static int* ReadBinaryIndexFile(string file_name);
 
 };
 #endif /* manipulation_file_hpp */
