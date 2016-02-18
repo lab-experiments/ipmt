@@ -40,6 +40,7 @@ void Search::SearchPatternInIndex()
     
     vector<string> v_pattern_lines = Search::GetPattern();
     index = ifp.p_index;
+    string last_value = "";
     
     for (size_t i = 0; i < v_pattern_lines.size(); i++)
     {
@@ -47,13 +48,18 @@ void Search::SearchPatternInIndex()
         {
             BinarySearch(v_pattern_lines[i].c_str(), ifp.v_text[j].c_str(),  ifp.v_text[j].length());
             if (m_occurrence_numbers > 0) {
-                m_out_lines.push_back(ifp.v_text[j]);
+                if( ifp.v_text[j] != last_value)
+                {
+                    m_out_lines.push_back(ifp.v_text[j]);
+                    last_value = ifp.v_text[j];
+                }
             }
         }
     }
     
     //limpando campos
     delete index;
+    last_value.clear();
     ifp.v_text.clear();
     v_pattern_lines.clear();
 }
@@ -69,7 +75,6 @@ void Search::BinarySearch(const char* pattern, const char* text, size_t text_siz
         int return_ = strncmp(pattern, text + index[mid], pattern_lenght);
         
         if (return_ == 0){
-           // cout << "Index " << index[mid]<< "\n";
             m_occurrence_numbers++;
         }
         

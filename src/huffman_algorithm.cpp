@@ -45,7 +45,7 @@ void HuffmanAlgorithm::Encode( const char* input_file_name )
     const char* temp_out_put_name ="temp_encoded";
     FILE *outputFile;
     outputFile = fopen( temp_out_put_name, "wb" );
-    assert( outputFile );
+   // assert( outputFile );
     
     // escreve no arquivo a tabela e cpodigos
     fprintf( outputFile, "%i""\n", table_size );
@@ -76,7 +76,7 @@ void HuffmanAlgorithm::Decode( const char* input_file_name)
 {
     FILE *inputFile;
     inputFile = fopen( input_file_name, "r" );
-//    assert( inputFile );
+    //assert( inputFile );
 
     // carrega os códigos
     fscanf( inputFile, "%i", &table_size );
